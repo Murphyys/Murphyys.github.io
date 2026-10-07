@@ -1,0 +1,351 @@
+{
+  "profile": {
+    "email": "69016099@kmitl.ac.th",
+    "github": "https://github.com/Murphyys",
+    "linkedin": "https://www.linkedin.com/in/bordin-pantdej-39733b248"
+  },
+  "facts": [
+    {
+      "v": "2",
+      "k": "degrees, both with honours"
+    },
+    {
+      "v": "2",
+      "k": "research stints in Japan"
+    },
+    {
+      "v": "1",
+      "k": "paper published, 1 in progress"
+    },
+    {
+      "v": "6",
+      "k": "tools built and in daily use"
+    }
+  ],
+  "eras": [
+    {
+      "id": "forging",
+      "anchor": "research",
+      "idx": "I",
+      "title": "The Forging Age",
+      "plain": "University",
+      "range": "2022 – 2026",
+      "scene": "hokkaido"
+    },
+    {
+      "id": "fork",
+      "anchor": "fork",
+      "idx": "II",
+      "title": "The Fork",
+      "plain": "First job, master's and first papers",
+      "range": "2026",
+      "scene": "fork"
+    },
+    {
+      "id": "builds",
+      "anchor": "projects",
+      "idx": "III",
+      "title": "Things I Built",
+      "plain": "Side projects I still use",
+      "range": "2024 – now",
+      "scene": "blocks"
+    }
+  ],
+  "events": [
+    {
+      "id": "legaltech",
+      "era": "forging",
+      "year": 2022,
+      "date": "2022",
+      "title": "First competition",
+      "short": "Chula Legal Tech, top 12.",
+      "icon": "trophy",
+      "long": "My first serious competition, in my first year at KMITL. We reached the top 12 at Chula Legal Tech, and I learned how much can be built when a deadline is close."
+    },
+    {
+      "id": "n3",
+      "era": "forging",
+      "year": 2023,
+      "date": "Jul 2023",
+      "title": "JLPT N3",
+      "short": "Japanese, from hobby to certificate.",
+      "icon": "lang",
+      "long": "I had been teaching myself Japanese for a few years. Passing N3 was the first proof it was more than a hobby."
+    },
+    {
+      "id": "kushiro",
+      "era": "forging",
+      "year": 2024,
+      "date": "Apr – Jun 2024",
+      "title": "Kushiro, Hokkaido",
+      "featured": true,
+      "short": "My first time working abroad.",
+      "icon": "torii",
+      "photo": "",
+      "long": "Japanese started as a hobby. Six weeks at the National Institute of Technology, Kushiro College turned it into a direction. I built an object detector that counts snacks on a shelf and reports to Microsoft Teams, worked alongside Finnish and Japanese students, and came home knowing I wanted research and Japan to be part of what comes next.",
+      "beats": [
+        {
+          "label": "Weeks 1–2",
+          "text": "Labelled a dataset and trained a YOLOv8 model to recognise snacks."
+        },
+        {
+          "label": "Along the way",
+          "text": "Tea ceremony, calligraphy and flower arranging, plus trips to Akan and Kushiro Shitsugen National Park."
+        },
+        {
+          "label": "Finish",
+          "text": "The system ran on a Raspberry Pi and posted counts to Teams every ten seconds."
+        }
+      ],
+      "tags": [
+        "YOLOv8",
+        "OpenCV",
+        "Raspberry Pi"
+      ]
+    },
+    {
+      "id": "comps",
+      "era": "forging",
+      "year": 2024,
+      "date": "2024",
+      "title": "Competition year",
+      "short": "TESA Top Gun Rally, 4th place, and five more events.",
+      "icon": "trophy",
+      "long": "A year of saying yes to every competition I could fit in. They covered embedded systems, cybersecurity, ICT and entrepreneurship, and taught me to work fast with new teams.",
+      "beats": [
+        {
+          "label": "4th place",
+          "text": "TESA Top Gun Rally"
+        },
+        {
+          "label": "Top 12",
+          "text": "Technopreneur"
+        },
+        {
+          "label": "Took part",
+          "text": "42 Bangkok, Thailand Cyber Top Talent, Huawei ICT Competition, Mission Mars"
+        }
+      ]
+    },
+    {
+      "id": "uec",
+      "era": "forging",
+      "year": 2025,
+      "date": "May – Jun 2025",
+      "title": "Research intern in Tokyo",
+      "featured": true,
+      "short": "Software-defined networking at the University of Electro-Communications.",
+      "icon": "net",
+      "photo": "",
+      "long": "Two months in the Kitsuwan Lab at the University of Electro-Communications (UEC), Tokyo. I studied how a software-defined network detects a failed link and reroutes traffic, using Mininet to build and break test networks. It was my first time working inside a research lab day to day.",
+      "beats": [
+        {
+          "label": "Start",
+          "text": "Learned SDN and Mininet from the ground up."
+        },
+        {
+          "label": "Project",
+          "text": "Link-failure detection and recovery in an emulated SDN."
+        }
+      ],
+      "tags": [
+        "SDN",
+        "Mininet",
+        "Python"
+      ]
+    },
+    {
+      "id": "thesis",
+      "era": "forging",
+      "year": 2025,
+      "date": "2025 – 2026",
+      "title": "Thesis: DC-HKNN",
+      "featured": true,
+      "demo": true,
+      "short": "A new nearest-neighbour method for finding which floor, and where, a phone is.",
+      "icon": "wifi",
+      "long": "GPS doesn't work well indoors. Wi-Fi fingerprinting fills the gap: record signal strength from every access point at known spots, then match a phone's live reading against that map. Standard KNN averages the closest matches even when they sit on different floors or far apart. DC-HKNN settles the floor first, then keeps only neighbours that pass two checks, one in signal space and one in physical space.",
+      "stats": [
+        {
+          "v": "2.225 m",
+          "k": "mean distance error"
+        },
+        {
+          "v": "3.814 m",
+          "k": "standard KNN, same data"
+        },
+        {
+          "v": "100%",
+          "k": "floor accuracy"
+        }
+      ],
+      "links": [
+        {
+          "text": "Code on GitHub ↗",
+          "href": "https://github.com/Murphyys/DC-HKNN-Indoor-Positioning"
+        }
+      ],
+      "tags": [
+        "Python",
+        "scikit-learn",
+        "XGBoost"
+      ]
+    },
+    {
+      "id": "grad",
+      "era": "forging",
+      "year": 2026,
+      "date": "2026",
+      "title": "Two degrees, both with honours",
+      "short": "B.Eng. IoT Systems (first-class) and B.Sc. Industrial Physics (second-class), KMITL.",
+      "icon": "grad",
+      "long": "I finished a dual-degree programme at King Mongkut's Institute of Technology Ladkrabang (KMITL).",
+      "beats": [
+        {
+          "label": "B.Eng.",
+          "text": "IoT Systems and Information Engineering, GPA 3.57, first-class honours"
+        },
+        {
+          "label": "B.Sc.",
+          "text": "Industrial Physics, GPA 3.46, second-class honours"
+        },
+        {
+          "label": "Also",
+          "text": "Member of the KMITL Security Lab"
+        }
+      ]
+    },
+    {
+      "id": "job",
+      "era": "fork",
+      "year": 2026,
+      "date": "Apr 2026",
+      "title": "Junior System Analyst",
+      "short": "Pine Pacific, Bangkok.",
+      "icon": "work",
+      "long": "My first full-time role: analysing requirements and designing business systems."
+    },
+    {
+      "id": "itpe",
+      "era": "fork",
+      "year": 2026,
+      "date": "Apr 2026",
+      "title": "IT Passport",
+      "short": "First professional certification (ITPE IP).",
+      "icon": "badge",
+      "long": "Passed the ITPE IT Passport exam, the entry level of the IT engineer exams used in several Asian countries."
+    },
+    {
+      "id": "masters",
+      "era": "fork",
+      "year": 2026,
+      "date": "Jun 2026",
+      "title": "Master's degree begins",
+      "short": "M.Eng. in AIoT and Information, KMITL.",
+      "icon": "grad",
+      "long": "I started a research master's at KMITL while working. My thesis continues the DC-HKNN line of work on indoor positioning."
+    },
+    {
+      "id": "paper1",
+      "era": "fork",
+      "year": 2026,
+      "date": "Jul 2026",
+      "title": "First paper",
+      "short": "Cloudless indoor positioning on a smartphone. ITC-CSCC 2026, Bangkok.",
+      "icon": "paper",
+      "long": "Our team's system runs the whole positioning pipeline on the phone itself, without sending data to a server. It was accepted and presented at ITC-CSCC 2026.",
+      "beats": [
+        {
+          "label": "Authors",
+          "text": "Wasan Boonsong, Bordin Pantdej, Panarat Cherntanomwong"
+        }
+      ]
+    },
+    {
+      "id": "paper2",
+      "era": "fork",
+      "year": 2026,
+      "date": "2026",
+      "title": "First first-author paper",
+      "short": "The DC-HKNN algorithm, written up in full.",
+      "icon": "paper",
+      "status": "prep",
+      "long": "I'm leading the write-up of DC-HKNN as a conference paper. It's in preparation now.",
+      "beats": [
+        {
+          "label": "Authors",
+          "text": "Bordin Pantdej, Wasan Boonsong, Panarat Cherntanomwong, et al."
+        }
+      ]
+    }
+  ],
+  "builds": [
+    {
+      "title": "Finly",
+      "wide": true,
+      "kicker": "Longest-running project · since 2025",
+      "desc": "My money in one place. It started as an Excel sheet and is now a web app on its eighth major version: spending and budgets, credit-card billing cycles, savings goals, and live brokerage and crypto positions with returns compared against the S&P 500. Monthly reports and card reminders arrive in Discord, and the app is locked with 2FA, a PIN and biometrics.",
+      "tags": [
+        "Next.js",
+        "Supabase",
+        "Vercel",
+        "Discord webhooks"
+      ],
+      "href": "https://finance-app-iota-peach.vercel.app/",
+      "linkText": "Open the live app ↗"
+    },
+    {
+      "title": "Second brain",
+      "wide": true,
+      "arch": true,
+      "private": true,
+      "kicker": "The system behind everything else",
+      "desc": "An Obsidian knowledge base that Claude Code reads and maintains with me. Calendars, task lists and notes flow in; each project I build reports its status back, so one place always knows what I'm working on. I wrote the custom commands, hooks and local search that keep it consistent.",
+      "tags": [
+        "Obsidian",
+        "Claude Code",
+        "MCP",
+        "Python",
+        "Ollama"
+      ]
+    },
+    {
+      "title": "cutkit",
+      "private": true,
+      "desc": "Edits my videos for me: cuts silences and repeated takes, transcribes Thai speech, burns in captions and exports a draft I can keep editing in CapCut.",
+      "tags": [
+        "Python",
+        "FFmpeg",
+        "Whisper"
+      ]
+    },
+    {
+      "title": "Home bot",
+      "private": true,
+      "desc": "An ESP32 camera that wakes my PC over MQTT, checks it really booted, and sends photos and a daily Japanese quiz to Discord.",
+      "tags": [
+        "ESP32",
+        "MQTT",
+        "Discord"
+      ]
+    },
+    {
+      "title": "Gmail digest",
+      "private": true,
+      "desc": "Summarises three inboxes into Thai each morning with an LLM and posts the result to Discord.",
+      "tags": [
+        "Apps Script",
+        "Gemini"
+      ]
+    },
+    {
+      "title": "Usage dashboard",
+      "private": true,
+      "desc": "A local dashboard showing how much I use AI coding tools and what it costs, by day and project.",
+      "tags": [
+        "Node.js",
+        "Chart.js"
+      ]
+    }
+  ]
+}
