@@ -9,7 +9,9 @@ Live: https://murphyys.github.io
 | File | What it is |
 |---|---|
 | `index.html` | The page: layout, styles and scripts (no build step) |
-| `journey.json` | All content: profile, hero facts, eras, events, projects |
+| `journey.json` | All content: profile, hero facts, selected work, CV extras, eras, events, projects |
+| `cv.html` | Printable CV (`/cv`), built from the same `journey.json`; "Download PDF" = browser print → Save as PDF |
+| `favicon.svg`, `icon-180.png` | Tab icon and iOS home-screen icon |
 | `images/` | Photos referenced from `journey.json` |
 | `.nojekyll` | Serve files as-is (skip Jekyll) |
 
@@ -22,6 +24,9 @@ Edit `journey.json` only:
 - **Photos:** put files in `images/` named `<event>-1.jpg`, `<event>-2.jpg`, … (1 = lead photo) and list them on the event:
   `"photos": ["images/kushiro-1.jpg", "images/kushiro-2.jpg"]`. One photo shows plain; several become a swipeable strip with dots (no autoplay).
   Files that fail to load drop out. Hero portrait: `"portrait": "images/portrait.jpg"` in `profile`. Resize to ≤1600px wide before committing.
+- **CV:** an event appears on the CV when it has a `cv` list, e.g. `{"section": "experience", "title", "org", "place", "dates", "detail"}`.
+  Sections: `education`, `research`, `publication` (`citation` + `status`), `experience`, `honor`. Skills, languages, summary and the
+  "Updated" date live in the top-level `cv` block. Add `profile.orcid` / `profile.scholar` and they show on both pages.
 - **Demo clip:** on a private build, `"video": "<url>"` replaces "request a demo" with "watch a short demo".
 - **Selected work:** the `selected` list under the hero; `go` is `feat:<event id>`, `event:<event id>` (opens it) or `build:<slug of title>`.
 - **Status chip:** optional `"badge"` on an event (e.g. `Presented`, `In preparation`).

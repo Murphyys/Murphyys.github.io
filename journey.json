@@ -42,6 +42,29 @@
       "go": "build:finly"
     }
   ],
+  "cv": {
+    "summary": "Researcher in Wi-Fi indoor positioning and machine learning, working as a Junior System Analyst while studying for a research master's at KMITL. I also build AI automations that run on their own and report back. Aiming for a PhD in communication networks or cybersecurity.",
+    "skills": [
+      {
+        "k": "Programming & ML",
+        "v": "Python, C, scikit-learn, XGBoost, YOLOv8, OpenCV, Jupyter"
+      },
+      {
+        "k": "Networks",
+        "v": "SDN, Mininet, Wireshark, Cisco Packet Tracer, MQTT"
+      },
+      {
+        "k": "Systems & web",
+        "v": "Next.js, Supabase, Vercel, Docker, Git, ESP32, Raspberry Pi"
+      },
+      {
+        "k": "AI tooling",
+        "v": "Claude Code, MCP, LLM APIs (Gemini), Ollama"
+      }
+    ],
+    "languages": "Thai (native) · English (TOEIC 710) · Japanese (JLPT N3)",
+    "updated": "October 2026"
+  },
   "eras": [
     {
       "id": "forging",
@@ -80,7 +103,14 @@
       "title": "First competition",
       "short": "Chula Legal Tech, top 12.",
       "icon": "trophy",
-      "long": "My first serious competition, in my first year at KMITL. We reached the top 12 at Chula Legal Tech, and I learned how much can be built when a deadline is close."
+      "long": "My first serious competition, in my first year at KMITL. We reached the top 12 at Chula Legal Tech, and I learned how much can be built when a deadline is close.",
+      "cv": [
+        {
+          "section": "honor",
+          "title": "Chula Legal Tech — Top 12",
+          "dates": "2022"
+        }
+      ]
     },
     {
       "id": "n3",
@@ -120,6 +150,16 @@
         "YOLOv8",
         "OpenCV",
         "Raspberry Pi"
+      ],
+      "cv": [
+        {
+          "section": "experience",
+          "title": "Research Intern, Summer Training Program",
+          "org": "National Institute of Technology, Kushiro College",
+          "place": "Kushiro, Japan",
+          "dates": "Apr – Jun 2024",
+          "detail": "YOLOv8 object detector on a Raspberry Pi that counts items on a shelf and reports to Microsoft Teams."
+        }
       ]
     },
     {
@@ -143,6 +183,18 @@
         {
           "label": "Took part",
           "text": "42 Bangkok, Thailand Cyber Top Talent, Huawei ICT Competition, Mission Mars"
+        }
+      ],
+      "cv": [
+        {
+          "section": "honor",
+          "title": "TESA Top Gun Rally — 4th place",
+          "dates": "2024"
+        },
+        {
+          "section": "honor",
+          "title": "Technopreneur — Top 12",
+          "dates": "2024"
         }
       ]
     },
@@ -170,6 +222,16 @@
         "SDN",
         "Mininet",
         "Python"
+      ],
+      "cv": [
+        {
+          "section": "experience",
+          "title": "Research Intern, Kitsuwan Lab",
+          "org": "The University of Electro-Communications (UEC)",
+          "place": "Tokyo, Japan",
+          "dates": "May – Jun 2025",
+          "detail": "Link-failure detection and recovery in software-defined networks, emulated with Mininet and Python."
+        }
       ]
     },
     {
@@ -209,7 +271,17 @@
         "XGBoost"
       ],
       "note": "Collected in a multi-floor building at KMITL with 18 Wi-Fi access points. Both baselines run on the same test split; hierarchical KNN reaches 3.656 m.",
-      "demoNote": "An illustration of the idea on a toy map, not the trained model."
+      "demoNote": "An illustration of the idea on a toy map, not the trained model.",
+      "cv": [
+        {
+          "section": "research",
+          "title": "DC-HKNN: dual-constrained hierarchical KNN",
+          "org": "Bachelor's thesis, KMITL",
+          "dates": "2025 – 2026",
+          "detail": "Floor-first Wi-Fi fingerprinting. 2.225 m mean error and 100% floor accuracy, vs 3.814 m for standard KNN on the same data (18 access points, multi-floor building).",
+          "link": "https://github.com/Murphyys/DC-HKNN-Indoor-Positioning"
+        }
+      ]
     },
     {
       "id": "grad",
@@ -233,6 +305,24 @@
           "label": "Also",
           "text": "Member of the KMITL Security Lab"
         }
+      ],
+      "cv": [
+        {
+          "section": "education",
+          "title": "Bachelor of Engineering, IoT Systems and Information Engineering",
+          "org": "King Mongkut's Institute of Technology Ladkrabang (KMITL)",
+          "place": "Bangkok",
+          "dates": "2022 – 2026",
+          "detail": "GPA 3.57, first-class honours. Thesis: DC-HKNN indoor positioning. Member of the KMITL Security Lab."
+        },
+        {
+          "section": "education",
+          "title": "Bachelor of Science, Industrial Physics (dual degree)",
+          "org": "King Mongkut's Institute of Technology Ladkrabang (KMITL)",
+          "place": "Bangkok",
+          "dates": "2022 – 2026",
+          "detail": "GPA 3.46, second-class honours."
+        }
       ]
     },
     {
@@ -243,7 +333,17 @@
       "title": "Junior System Analyst",
       "short": "Pine Pacific, Bangkok.",
       "icon": "work",
-      "long": "My first full-time role: analysing requirements and designing business systems."
+      "long": "My first full-time role: analysing requirements and designing business systems.",
+      "cv": [
+        {
+          "section": "experience",
+          "title": "Junior System Analyst",
+          "org": "Pine Pacific",
+          "place": "Bangkok",
+          "dates": "Apr 2026 – present",
+          "detail": "Requirements analysis and business system design."
+        }
+      ]
     },
     {
       "id": "itpe",
@@ -253,7 +353,14 @@
       "title": "IT Passport",
       "short": "First professional certification (ITPE IP).",
       "icon": "badge",
-      "long": "Passed the ITPE IT Passport exam, the entry level of the IT engineer exams used in several Asian countries."
+      "long": "Passed the ITPE IT Passport exam, the entry level of the IT engineer exams used in several Asian countries.",
+      "cv": [
+        {
+          "section": "honor",
+          "title": "ITPE IT Passport (IP) certification",
+          "dates": "2026"
+        }
+      ]
     },
     {
       "id": "masters",
@@ -263,7 +370,17 @@
       "title": "Master's degree begins",
       "short": "M.Eng. in AIoT and Information, KMITL.",
       "icon": "grad",
-      "long": "I started a research master's at KMITL while working. My thesis continues the DC-HKNN line of work on indoor positioning."
+      "long": "I started a research master's at KMITL while working. My thesis continues the DC-HKNN line of work on indoor positioning.",
+      "cv": [
+        {
+          "section": "education",
+          "title": "Master of Engineering, AIoT and Information",
+          "org": "King Mongkut's Institute of Technology Ladkrabang (KMITL)",
+          "place": "Bangkok",
+          "dates": "2026 – present",
+          "detail": "Research master's. Thesis continues DC-HKNN, Wi-Fi fingerprinting for multi-floor indoor positioning."
+        }
+      ]
     },
     {
       "id": "paper1",
@@ -288,7 +405,14 @@
           "text": "Wasan Boonsong, Bordin Pantdej, Panarat Cherntanomwong"
         }
       ],
-      "badge": "Presented"
+      "badge": "Presented",
+      "cv": [
+        {
+          "section": "publication",
+          "status": "Presented",
+          "citation": "W. Boonsong, B. Pantdej, and P. Cherntanomwong, “A Cloudless Multi-Floor Indoor Positioning System Using On-Device Machine Learning,” ITC-CSCC 2026, Bangkok, Thailand, Jul. 2026. DOI pending."
+        }
+      ]
     },
     {
       "id": "paper2",
@@ -306,7 +430,14 @@
           "text": "Bordin Pantdej, Wasan Boonsong, Panarat Cherntanomwong, et al."
         }
       ],
-      "badge": "In preparation"
+      "badge": "In preparation",
+      "cv": [
+        {
+          "section": "publication",
+          "status": "In preparation",
+          "citation": "B. Pantdej, W. Boonsong, P. Cherntanomwong, et al. Conference paper on the DC-HKNN algorithm for multi-floor Wi-Fi indoor positioning."
+        }
+      ]
     }
   ],
   "builds": [
@@ -322,7 +453,8 @@
         "Discord webhooks"
       ],
       "href": "https://finance-app-iota-peach.vercel.app/",
-      "linkText": "Open the live app ↗"
+      "linkText": "Open the live app ↗",
+      "cvLine": "Personal finance web app with budgets, credit-card cycles, live brokerage and crypto positions, and monthly Discord reports"
     },
     {
       "title": "Second brain",
@@ -337,7 +469,8 @@
         "MCP",
         "Python",
         "Ollama"
-      ]
+      ],
+      "cvLine": "An Obsidian knowledge base that Claude Code maintains, fed by calendars and task lists, with every project reporting status back"
     },
     {
       "title": "cutkit",

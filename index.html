@@ -247,6 +247,7 @@ button{font-family:inherit}
     <a href="#research">Research</a>
     <a href="#projects">Projects</a>
     <a href="#contact">Contact</a>
+    <a href="cv.html">CV</a>
   </nav>
   <div class="cue soft mono"><span>Scroll to begin</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 4v16M6 14l6 6 6-6"/></svg></div>
 </header>
@@ -413,8 +414,8 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
 
   // ---------- contact ----------
   $('email').textContent = D.profile.email;
-  $('socials').innerHTML = [['GitHub', D.profile.github], ['LinkedIn', D.profile.linkedin]]
-    .filter(([, u]) => u).map(([n, u]) => `<a class="btn" href="${esc(u)}" target="_blank" rel="noopener">${n} ↗</a>`).join('');
+  $('socials').innerHTML = [['GitHub', D.profile.github], ['LinkedIn', D.profile.linkedin], ['ORCID', D.profile.orcid], ['Google Scholar', D.profile.scholar]]
+    .filter(([, u]) => u).map(([n, u]) => `<a class="btn" href="${esc(u)}" target="_blank" rel="noopener">${n} ↗</a>`).join('') + `<a class="btn" href="cv.html">CV / PDF</a>`;
 
   // ---------- modal ----------
   const overlay = $('overlay'), panel = $('panel');
