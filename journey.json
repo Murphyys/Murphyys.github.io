@@ -75,7 +75,7 @@
     {"id": "uec-cert", "kind": "cert", "title": "Certificate of Research Completion", "issuer": "The University of Electro-Communications, Tokyo", "date": "Jun 2025", "image": "images/certs/uec-research-completion.jpg", "event": "uec"},
     {"id": "tesa", "kind": "award", "badge": "4th place · national", "title": "TESA Top Gun Rally #18", "issuer": "TESA · Kasetsart University Sriracha · NIA", "date": "Nov 2024", "image": "images/certs/tesa-top-gun-rally-18.jpg", "event": "comps", "desc": "A week-long national embedded-systems hackathon. Theme: Acoustic and AI-Based Predictive Maintenance with Edge Computing. I wrote the Arduino firmware for the edge device that listens to machine sound."},
     {"id": "aws-found", "kind": "cert", "title": "AWS Academy Graduate — Cloud Foundations", "issuer": "AWS Academy", "date": "Oct 2024", "image": "images/certs/aws-cloud-foundations.jpg", "href": "https://www.credly.com/go/0Zf88SP0", "cv": true},
-    {"id": "kushiro-cert", "kind": "cert", "title": "Summer Training Program — Certificate of Completion", "issuer": "National Institute of Technology, Kushiro College", "date": "Jun 2024", "image": "images/certs/kushiro-training-completion.jpg", "event": "kushiro"}
+    {"id": "kushiro-cert", "kind": "cert", "title": "Certificate of Completion — Summer Training Program", "issuer": "National Institute of Technology, Kushiro College", "date": "Jun 2024", "image": "images/certs/kushiro-training-completion.jpg", "event": "kushiro"}
   ],
   "eras": [
     {
@@ -129,7 +129,7 @@
       "era": "forging",
       "year": 2024,
       "date": "Apr – Jun 2024",
-      "title": "Kushiro, Hokkaido",
+      "title": "Research intern in Hokkaido",
       "featured": true,
       "short": "My first time working abroad.",
       "icon": "torii",
