@@ -24,3 +24,4 @@ Static portfolio site on GitHub Pages (user site, served from `main`). No framew
 - v1.1: printable `/cv` page generated from `journey.json`.
 - After ICECC submission (deadline 2026-10-15): set paper2 to "Submitted".
 - Resume for employers (separate from academic CV).
+- ORCID (now) and Google Scholar (after the ITC-CSCC paper is on IEEE Xplore): add as `profile.orcid` / `profile.scholar` and show them in Contact.
