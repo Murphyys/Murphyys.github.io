@@ -16,9 +16,13 @@ Static portfolio site on GitHub Pages (user site, served from `main`). No framew
 - Unsubmitted papers stay "In preparation" — no venue results or content beyond what is public.
 - Tone: English, plain, first person. Era names are epic, each with a plain subtitle. Formal: no hobby items on the timeline
   (JLPT N3 was removed 2026-10-08; Japanese stays only in `cv.languages`).
-- **Certificates** live in the top-level `certs` list + `images/certs/` (see README). Before publishing a scan, mask anything beyond the name
-  (birth date, ID, certificate number — the ITPE scan has its number masked). `TESA_Team.pdf` and the internship-completion certificates
-  are never published (they carry other people's names / a birth date); use the single-name `TESA.pdf` only.
+- **Certificates** live in the top-level `certs` list + `images/certs/` (see README) — all of them in that one section, cross-linked to
+  their event via `event`. Before publishing a scan, mask anything beyond the name: done so far — ITPE (certificate no.), UEC (birth date,
+  student ID, certificate no.) and Kushiro (birth date); those two are scanned PDFs with no text layer, so the masks are pixel boxes
+  (re-check by eye after any re-render). `TESA_Team.pdf` is never published (teammates' names); use the single-name `TESA.pdf` only.
+- **Hero cutout** (`images/portrait-cutout.webp`) was made with `hyperframes remove-background` from `dev/cutkit-hyperframes`
+  (`--device dml`) on the 600² portrait, then trimmed to the alpha bounding box. A higher-resolution source would sharpen it; the round
+  `portrait.jpg` stays as the fallback and `og:image`.
 - **Photos** in `images/` are re-encoded copies (≤1600px, EXIF stripped), ≤4 per event, chosen for a formal page — the originals stay with Ice.
   Both themes share one warm palette: light sepia and its dark inversion (`--bg #15130f`, `--surface #1f1b16`, brass accents). Keep the two
   dark blocks in `index.html` identical, and `cv.html` in step; the CV print block always forces the light set.
@@ -26,9 +30,10 @@ Static portfolio site on GitHub Pages (user site, served from `main`). No framew
 
 ## Pending / Known issues
 
-- ✅ Photos (2026-10-09): portrait (sakura crop) + 4 photos each for `kushiro`, `uec`, `paper1`, `grad`; `og:image` set. Skipped on purpose:
-  the two completion certificates (birth date), costume/mask party shots, duplicates. Ice can swap the portrait for the UEC-dish crop (kept
-  outside the repo) by asking.
+- ✅ Photos (2026-10-09): portrait (sakura crop) + cutout on the hero disc, 4 photos each for `kushiro`, `uec`, `paper1`, `grad`
+  (thumbnails on the timeline cards, galleries wrap, tap to enlarge); `og:image` set. Skipped on purpose: costume/mask party shots,
+  duplicates. The UEC/Kushiro completion certificates are now in `certs` with the birth date masked. Ice can swap the portrait for the
+  UEC-dish crop (kept outside the repo) by asking, or send the original sakura photo for a sharper cutout.
 - Demo clips: when Ice sends a link for cutkit / Home bot / Gmail digest / Second brain, set `video` on that build.
 - LinkedIn profile is outdated; update it, then consider a shorter custom URL and update `profile.linkedin`.
 - After ICECC submission (deadline 2026-10-15): set paper2 to "Submitted", replace its CV `citation` with the real title (Ice will send it), bump `cv.updated`.

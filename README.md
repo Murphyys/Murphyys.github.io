@@ -23,11 +23,17 @@ Edit `journey.json` only:
   Optional: `beats`, `stats`, `links`, `tags`, `"featured": true` (wide card), `"status": "prep"` (in progress).
 - **Photos:** put files in `images/` named `<event>-1.jpg`, `<event>-2.jpg`, … (1 = lead photo) and list them on the event:
   `"photos": ["images/kushiro-1.jpg", "images/kushiro-2.jpg"]`. One photo shows plain; several become a swipeable strip with dots (no autoplay).
-  Files that fail to load drop out. Hero portrait: `"portrait": "images/portrait.jpg"` in `profile` (600×600, also used as `og:image`).
+  Files that fail to load drop out. Arrows wrap around, and tapping a photo opens it full-size (lightbox with ‹ › / arrow keys, wrapping too).
+  Non-featured events show their lead photo as a small thumbnail on the timeline card.
+  Hero portrait: `"portrait": "images/portrait.jpg"` in `profile` (600×600, also used as `og:image`) and, optionally,
+  `"portraitCutout": "images/portrait-cutout.webp"` — a background-removed head-and-shoulders PNG/WebP with alpha, shown on a brass disc
+  with the head rising above it (made with `hyperframes remove-background portrait.jpg -o cutout.png`, then trimmed to the subject's bounding box).
+  If the cutout is missing or fails to load, the round `portrait` is shown instead.
   Keep it to ≤4 photos per event, ≤1600px on the long side, JPEG ~q82, and strip EXIF (location data) before committing.
 - **Certifications & awards:** the top-level `certs` list, newest first:
-  `{"id", "kind": "cert" | "award", "title", "issuer", "date", "image": "images/certs/<id>.jpg", "badge"?, "desc"?, "href"? (verify link), "cv"?: true}`.
-  They render as cards after the eras (click = full-size view). `"cv": true` also lists the item under *Honors & certifications* on the CV —
+  `{"id", "kind": "cert" | "award", "title", "issuer", "date", "image": "images/certs/<id>.jpg", "badge"?, "desc"?, "href"? (verify link), "event"? (event id), "cv"?: true}`.
+  They render as cards after the eras (click the scan = full-size view). `"event"` cross-links both ways: the card gets "Part of: <event> →"
+  (opens that event) and the event's dialog gets a "Certificate ↗" link. `"cv": true` also lists the item under *Honors & certifications* on the CV —
   leave it out when the same honour is already an event `cv` entry, or the CV shows it twice. Render PDFs to JPEG (≤1600px) first, and never
   publish a scan that shows a birth date, ID or certificate number (crop or mask it).
 - **Contact:** the email address in the "What's next" section is itself the copy button (click → clipboard); no separate control.
