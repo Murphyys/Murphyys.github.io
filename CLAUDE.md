@@ -22,6 +22,8 @@ Static portfolio site on GitHub Pages (user site, served from `main`). No framew
 - Photos: gallery support is in (`photos` list per event, `profile.portrait`); waiting for Ice's files (`portrait`, `kushiro-N`, `uec-N`, `itc-cscc-N`, `graduation-N`). Resize to ≤1600px wide (portrait ≤600px square) and compress, then add paths to `journey.json`.
 - Demo clips: when Ice sends a link for cutkit / Home bot / Gmail digest / Second brain, set `video` on that build.
 - LinkedIn profile is outdated; update it, then consider a shorter custom URL and update `profile.linkedin`.
-- After ICECC submission (deadline 2026-10-15): set paper2 to "Submitted".
+- After ICECC submission (deadline 2026-10-15): set paper2 to "Submitted", replace its CV `citation` with the real title (Ice will send it), bump `cv.updated`.
+- ITC-CSCC DOI: badge → "Published", add DOI link to paper1 (timeline + CV).
+- Ice to review CV Skills. Full to-do list (incl. LinkedIn copy): vault `wiki/meta/2026-10-07-session-portfolio-website.md` § Pending.
 - Resume for employers (separate from academic CV).
 - ORCID (now) and Google Scholar (after the ITC-CSCC paper is on IEEE Xplore): add as `profile.orcid` / `profile.scholar` and show them in Contact.
