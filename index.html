@@ -6,6 +6,7 @@
 <meta name="description" content="Bordin Pantdej (Ice) — Wi-Fi indoor positioning research and AI automations I build and use every day.">
 <meta property="og:title" content="Bordin Pantdej | Portfolio">
 <meta property="og:description" content="Research, projects and the path so far.">
+<meta property="og:image" content="https://murphyys.github.io/images/portrait.jpg">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-180.png">
 <title>Bordin Pantdej | Portfolio</title>
@@ -25,16 +26,17 @@
   --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
 }
+/* Dark: the same warm sepia family, just inverted — near-black coffee paper, parchment ink, brass accents. Keep both blocks identical. */
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#12141c; --surface:#1b1e2a; --ink:#ece7d8; --ink-soft:#bab39f; --line:#363d50;
-  --past:#e0a84e; --now:#f0b155; --future:#57d6c2; --year:#2c2f3c;
-  --wash1:#1a1c25; --wash2:#24241f; --wash3:#1f2826; --wash4:#1b2b2a;
-  --abyss:#0a0b10; --abyss-ink:#ece7d8; --abyss-soft:#a7a191; color-scheme:dark}}
+  --bg:#15130f; --surface:#1f1b16; --ink:#ede5d3; --ink-soft:#b8ac94; --line:#3b3327;
+  --past:#d9a45a; --now:#eab261; --future:#62cdb9; --year:#2a251d;
+  --wash1:#1a1711; --wash2:#1e1a12; --wash3:#191d18; --wash4:#162220;
+  --abyss:#0c0b09; --abyss-ink:#ede5d3; --abyss-soft:#aaa28f; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#12141c; --surface:#1b1e2a; --ink:#ece7d8; --ink-soft:#bab39f; --line:#363d50;
-  --past:#e0a84e; --now:#f0b155; --future:#57d6c2; --year:#2c2f3c;
-  --wash1:#1a1c25; --wash2:#24241f; --wash3:#1f2826; --wash4:#1b2b2a;
-  --abyss:#0a0b10; --abyss-ink:#ece7d8; --abyss-soft:#a7a191; color-scheme:dark}
+  --bg:#15130f; --surface:#1f1b16; --ink:#ede5d3; --ink-soft:#b8ac94; --line:#3b3327;
+  --past:#d9a45a; --now:#eab261; --future:#62cdb9; --year:#2a251d;
+  --wash1:#1a1711; --wash2:#1e1a12; --wash3:#191d18; --wash4:#162220;
+  --abyss:#0c0b09; --abyss-ink:#ede5d3; --abyss-soft:#aaa28f; color-scheme:dark}
 
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -181,6 +183,26 @@ button{font-family:inherit}
 .arch .ln.back{stroke:var(--past);stroke-dasharray:4 4}
 .arch .ah{fill:var(--ink-soft)} .arch .ah.back{fill:var(--past)}
 
+/* certifications & awards — cards with the scanned certificate, tap for full size */
+.certs{max-width:900px;margin:0 auto;padding:80px 16px 16px;text-align:center}
+.certs h2{font-size:clamp(1.7rem,4.5vw,2.4rem)}
+.certs .sub{margin-top:6px;font-size:.9rem}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px;margin-top:24px;text-align:left}
+.cert{background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;color:var(--ink);padding:0;font:inherit;cursor:pointer;text-align:left;transition:border-color .15s,transform .15s}
+.cert:hover{border-color:var(--past);transform:translateY(-2px)}
+.cert .thumb{display:block;aspect-ratio:4/3;background:var(--bg);border-bottom:1px solid var(--line);overflow:hidden}
+.cert .thumb img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.cert .cb{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px}
+.cert .cb b{font-family:var(--f-display);font-weight:500;font-size:1.12rem;line-height:1.3}
+.cert .cb .d{font-size:.84rem;color:var(--ink-soft);line-height:1.5;margin-top:4px}
+.cert .badge{margin:0 0 4px}
+.lightbox{border:0;padding:0;background:transparent;max-width:none;max-height:none;overflow:visible}
+.lightbox::backdrop{background:rgba(10,8,4,.82)}
+.lightbox figure{position:relative;margin:0}
+.lightbox img{display:block;max-width:min(94vw,1100px);max-height:84vh;border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#fff}
+.lightbox figcaption{color:#fff;text-align:center;margin-top:10px;opacity:.85}
+.lightbox .close{top:-14px;right:-14px}
+
 /* you are here */
 .here{text-align:center;padding:96px 16px 40px}
 .here .ring{width:20px;height:20px;margin:0 auto 14px;border-radius:50%;background:var(--now);box-shadow:0 0 0 6px color-mix(in srgb,var(--now) 22%,transparent)}
@@ -193,7 +215,11 @@ button{font-family:inherit}
 .next .open{margin:14px auto 0;max-width:36em;color:var(--abyss-soft)}
 .contact{margin:64px auto 0;display:flex;flex-direction:column;align-items:center;gap:12px}
 .contact .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center}
-.contact code{font-family:var(--f-mono);font-size:.95rem;padding:8px 14px;border:1px solid color-mix(in srgb,var(--abyss-ink) 30%,transparent);border-radius:999px;user-select:all}
+/* the address itself is the copy button — one tap copies, no separate control */
+.contact .email{font-family:var(--f-mono);font-size:.95rem;padding:8px 16px;border:1px solid color-mix(in srgb,var(--abyss-ink) 30%,transparent);border-radius:999px;background:transparent;color:var(--abyss-ink);cursor:pointer;display:inline-flex;align-items:center;gap:10px;user-select:all}
+.contact .email::after{content:"copy";font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;opacity:.55;transition:opacity .15s}
+.contact .email:hover{background:color-mix(in srgb,var(--abyss-ink) 10%,transparent)} .contact .email:hover::after{opacity:.9}
+.contact .email.ok{border-color:var(--now)} .contact .email.ok::after{content:"copied ✓";color:var(--now);opacity:1}
 .contact button,.contact a.btn{font-family:var(--f-mono);font-size:.78rem;padding:8px 14px;border-radius:999px;border:1px solid color-mix(in srgb,var(--abyss-ink) 30%,transparent);background:transparent;color:var(--abyss-ink);cursor:pointer;text-decoration:none}
 .contact button:hover,.contact a.btn:hover{background:color-mix(in srgb,var(--abyss-ink) 10%,transparent)}
 .fine{margin-top:56px;color:var(--abyss-soft);opacity:.7}
@@ -250,6 +276,7 @@ button{font-family:inherit}
   <nav class="jump" aria-label="Jump to">
     <a href="#research">Research</a>
     <a href="#projects">Projects</a>
+    <a href="#certs">Certifications</a>
     <a href="#contact">Contact</a>
     <a href="cv.html">CV</a>
   </nav>
@@ -257,6 +284,19 @@ button{font-family:inherit}
 </header>
 
 <main id="journey"></main>
+
+<section class="certs" id="certs" hidden>
+  <h2>Certifications &amp; Awards</h2>
+  <p class="sub soft">Click a card to view the certificate.</p>
+  <div class="cgrid" id="cgrid"></div>
+</section>
+<dialog class="lightbox" id="lightbox" aria-label="Certificate">
+  <figure>
+    <button type="button" class="close" id="lbClose" aria-label="Close"><svg width="15" height="15"><use href="#i-close"/></svg></button>
+    <img id="lbImg" alt="">
+    <figcaption class="mono" id="lbCap"></figcaption>
+  </figure>
+</dialog>
 
 <section class="here" id="now">
   <div class="ring"></div>
@@ -268,13 +308,12 @@ button{font-family:inherit}
 <section class="next" id="next">
   <p class="idx">✦</p>
   <h2 style="font-size:clamp(1.9rem,5vw,2.8rem);margin-top:4px">What's next</h2>
-  <blockquote>A PhD in communication networks or cybersecurity, building on my work in wireless positioning.</blockquote>
+  <blockquote>A PhD in communication networks or AI, building on my work in wireless positioning.</blockquote>
   <p class="open">I'm also open to neighbouring fields when the right opportunity comes along. If your lab or team works on something close, I'd like to hear from you.</p>
   <div class="contact" id="contact">
     <p class="mono" style="color:var(--abyss-soft);letter-spacing:.14em;text-transform:uppercase">Get in touch</p>
     <div class="row">
-      <code id="email"></code>
-      <button type="button" id="copyBtn">Copy email</button>
+      <button type="button" class="email" id="email" title="Click to copy"></button>
     </div>
     <div class="row" id="socials"></div>
   </div>
@@ -416,6 +455,25 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
   $('journey').innerHTML = html;
   document.querySelectorAll('#journey .gal').forEach(g => wireGallery(g));
 
+  // ---------- certifications & awards ----------
+  if (D.certs && D.certs.length) {
+    $('certs').hidden = false;
+    $('cgrid').innerHTML = D.certs.map((c, i) => `<button type="button" class="cert" data-i="${i}" aria-haspopup="dialog">
+      <span class="thumb"><img src="${esc(c.image)}" alt="${esc(c.title)} — certificate" loading="lazy" decoding="async"></span>
+      <span class="cb">${c.badge ? `<span class="badge">${esc(c.badge)}</span>` : ''}<b>${esc(c.title)}</b><span class="mono" style="color:var(--ink-soft)">${esc(c.issuer)} · ${esc(c.date)}</span>${c.desc ? `<span class="d">${esc(c.desc)}</span>` : ''}</span>
+    </button>`).join('');
+    const lb = $('lightbox');
+    $('cgrid').addEventListener('click', ev => {
+      const b = ev.target.closest('.cert'); if (!b) return;
+      const c = D.certs[+b.dataset.i];
+      $('lbImg').src = c.image; $('lbImg').alt = `${c.title} — certificate`;
+      $('lbCap').innerHTML = `${esc(c.title)} · ${esc(c.issuer)} · ${esc(c.date)}` + (c.href ? ` · <a href="${esc(c.href)}" target="_blank" rel="noopener" style="color:inherit">Verify ↗</a>` : '');
+      lb.showModal();
+    });
+    $('lbClose').addEventListener('click', () => lb.close());
+    lb.addEventListener('click', ev => { if (ev.target === lb) lb.close(); });   // click on the backdrop
+  }
+
   // ---------- contact ----------
   $('email').textContent = D.profile.email;
   $('socials').innerHTML = [['GitHub', D.profile.github], ['LinkedIn', D.profile.linkedin], ['ORCID', D.profile.orcid], ['Google Scholar', D.profile.scholar]]
@@ -512,11 +570,12 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
     return () => { alive = false; cancelAnimationFrame(raf); };
   }
 
-  // ---------- copy email ----------
-  $('copyBtn').addEventListener('click', () => {
-    const b = $('copyBtn'), email = $('email').textContent;
-    const done = () => { b.textContent = 'Copied'; setTimeout(() => b.textContent = 'Copy email', 1800); };
-    const fallback = () => { const r = document.createRange(); r.selectNodeContents($('email')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'Selected, press Ctrl+C'; };
+  // ---------- copy email (the address is the button) ----------
+  $('email').addEventListener('click', () => {
+    const b = $('email'), email = D.profile.email;
+    const done = () => { b.classList.add('ok'); setTimeout(() => b.classList.remove('ok'), 1800); };
+    // no clipboard API (old browser / insecure context): select the text so Ctrl+C still works
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents(b); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.title = 'Selected — press Ctrl+C'; };
     try { navigator.clipboard.writeText(email).then(done, fallback); } catch (e) { fallback(); }
   });
 

@@ -14,12 +14,21 @@ Static portfolio site on GitHub Pages (user site, served from `main`). No framew
 - **Private project repos** (cutkit, home-bot, gmail-discord-summary, claude-usage-dashboard, icebrain): `"private": true`, no GitHub link.
 - **Finly** links to the live app, not GitHub.
 - Unsubmitted papers stay "In preparation" — no venue results or content beyond what is public.
-- Tone: English, plain, first person. Era names are epic, each with a plain subtitle.
+- Tone: English, plain, first person. Era names are epic, each with a plain subtitle. Formal: no hobby items on the timeline
+  (JLPT N3 was removed 2026-10-08; Japanese stays only in `cv.languages`).
+- **Certificates** live in the top-level `certs` list + `images/certs/` (see README). Before publishing a scan, mask anything beyond the name
+  (birth date, ID, certificate number — the ITPE scan has its number masked). `TESA_Team.pdf` and the internship-completion certificates
+  are never published (they carry other people's names / a birth date); use the single-name `TESA.pdf` only.
+- **Photos** in `images/` are re-encoded copies (≤1600px, EXIF stripped), ≤4 per event, chosen for a formal page — the originals stay with Ice.
+  Both themes share one warm palette: light sepia and its dark inversion (`--bg #15130f`, `--surface #1f1b16`, brass accents). Keep the two
+  dark blocks in `index.html` identical, and `cv.html` in step; the CV print block always forces the light set.
 - Test with a local server (`python -m http.server`) at desktop and phone width; no horizontal scroll.
 
 ## Pending / Known issues
 
-- Photos: gallery support is in (`photos` list per event, `profile.portrait`); waiting for Ice's files (`portrait`, `kushiro-N`, `uec-N`, `itc-cscc-N`, `graduation-N`). Resize to ≤1600px wide (portrait ≤600px square) and compress, then add paths to `journey.json`.
+- ✅ Photos (2026-10-09): portrait (sakura crop) + 4 photos each for `kushiro`, `uec`, `paper1`, `grad`; `og:image` set. Skipped on purpose:
+  the two completion certificates (birth date), costume/mask party shots, duplicates. Ice can swap the portrait for the UEC-dish crop (kept
+  outside the repo) by asking.
 - Demo clips: when Ice sends a link for cutkit / Home bot / Gmail digest / Second brain, set `video` on that build.
 - LinkedIn profile is outdated; update it, then consider a shorter custom URL and update `profile.linkedin`.
 - After ICECC submission (deadline 2026-10-15): set paper2 to "Submitted", replace its CV `citation` with the real title (Ice will send it), bump `cv.updated`.

@@ -1,5 +1,6 @@
 {
   "profile": {
+    "portrait": "images/portrait.jpg",
     "email": "69016099@kmitl.ac.th",
     "github": "https://github.com/Murphyys",
     "linkedin": "https://www.linkedin.com/in/bordin-pantdej-39733b248"
@@ -43,7 +44,7 @@
     }
   ],
   "cv": {
-    "summary": "Researcher in Wi-Fi indoor positioning and machine learning, working as a Junior System Analyst while studying for a research master's at KMITL. I also build AI automations that run on their own and report back. Aiming for a PhD in communication networks or cybersecurity.",
+    "summary": "Researcher in Wi-Fi indoor positioning and machine learning, working as a Junior System Analyst while studying for a research master's at KMITL. I also build AI automations that run on their own and report back. Aiming for a PhD in communication networks or AI.",
     "skills": [
       {
         "k": "Programming & ML",
@@ -65,6 +66,12 @@
     "languages": "Thai (native) · English (professional working proficiency) · Japanese (JLPT N3)",
     "updated": "October 2026"
   },
+  "certs": [
+    {"id": "itpe", "kind": "cert", "title": "ITPE IT Passport (IP)", "issuer": "ITPE (IT Professional Examination)", "date": "Apr 2026", "image": "images/certs/itpe-ip.jpg"},
+    {"id": "aws-dev", "kind": "cert", "title": "AWS Academy Graduate — Cloud Developing", "issuer": "AWS Academy", "date": "Oct 2025", "image": "images/certs/aws-cloud-developing.jpg", "href": "https://www.credly.com/go/wZiJgQEb", "cv": true},
+    {"id": "tesa", "kind": "award", "badge": "4th place · national", "title": "TESA Top Gun Rally #18", "issuer": "TESA · Kasetsart University Sriracha · NIA", "date": "Nov 2024", "image": "images/certs/tesa-top-gun-rally-18.jpg", "desc": "A week-long national embedded-systems hackathon. Theme: Acoustic and AI-Based Predictive Maintenance with Edge Computing. I wrote the Arduino firmware for the edge device that listens to machine sound."},
+    {"id": "aws-found", "kind": "cert", "title": "AWS Academy Graduate — Cloud Foundations", "issuer": "AWS Academy", "date": "Oct 2024", "image": "images/certs/aws-cloud-foundations.jpg", "href": "https://www.credly.com/go/0Zf88SP0", "cv": true}
+  ],
   "eras": [
     {
       "id": "forging",
@@ -113,17 +120,7 @@
       ]
     },
     {
-      "id": "n3",
-      "era": "forging",
-      "year": 2023,
-      "date": "Jul 2023",
-      "title": "JLPT N3",
-      "short": "Japanese, from hobby to certificate.",
-      "icon": "lang",
-      "long": "I had been teaching myself Japanese for a few years. Passing N3 was the first proof it was more than a hobby."
-    },
-    {
-      "id": "kushiro",
+      "id": "kushiro", "photos": ["images/kushiro-1.jpg", "images/kushiro-2.jpg", "images/kushiro-3.jpg", "images/kushiro-4.jpg"],
       "era": "forging",
       "year": 2024,
       "date": "Apr – Jun 2024",
@@ -199,7 +196,7 @@
       ]
     },
     {
-      "id": "uec",
+      "id": "uec", "photos": ["images/uec-1.jpg", "images/uec-2.jpg", "images/uec-3.jpg", "images/uec-4.jpg"],
       "era": "forging",
       "year": 2025,
       "date": "May – Jun 2025",
@@ -284,7 +281,7 @@
       ]
     },
     {
-      "id": "grad",
+      "id": "grad", "photos": ["images/grad-1.jpg", "images/grad-2.jpg", "images/grad-3.jpg", "images/grad-4.jpg"],
       "era": "forging",
       "year": 2026,
       "date": "2026",
@@ -383,7 +380,7 @@
       ]
     },
     {
-      "id": "paper1",
+      "id": "paper1", "photos": ["images/paper1-1.jpg", "images/paper1-2.jpg", "images/paper1-3.jpg", "images/paper1-4.jpg"],
       "era": "fork",
       "year": 2026,
       "date": "Jul 2026",
