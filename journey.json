@@ -2,8 +2,7 @@
   "profile": {
     "email": "69016099@kmitl.ac.th",
     "github": "https://github.com/Murphyys",
-    "linkedin": "https://www.linkedin.com/in/bordin-pantdej-39733b248",
-    "portrait": "images/portrait.jpg"
+    "linkedin": "https://www.linkedin.com/in/bordin-pantdej-39733b248"
   },
   "facts": [
     {
@@ -102,7 +101,6 @@
       "featured": true,
       "short": "My first time working abroad.",
       "icon": "torii",
-      "photo": "images/kushiro.jpg",
       "long": "Japanese started as a hobby. Six weeks at the National Institute of Technology, Kushiro College turned it into a direction. I built an object detector that counts snacks on a shelf and reports to Microsoft Teams, worked alongside Finnish and Japanese students, and came home knowing I wanted research and Japan to be part of what comes next.",
       "beats": [
         {
@@ -157,7 +155,6 @@
       "featured": true,
       "short": "Software-defined networking at the University of Electro-Communications.",
       "icon": "net",
-      "photo": "images/uec.jpg",
       "long": "Two months in the Kitsuwan Lab at the University of Electro-Communications (UEC), Tokyo. I studied how a software-defined network detects a failed link and reroutes traffic, using Mininet to build and break test networks. It was my first time working inside a research lab day to day.",
       "beats": [
         {
@@ -236,8 +233,7 @@
           "label": "Also",
           "text": "Member of the KMITL Security Lab"
         }
-      ],
-      "photo": "images/graduation.jpg"
+      ]
     },
     {
       "id": "job",
@@ -292,7 +288,6 @@
           "text": "Wasan Boonsong, Bordin Pantdej, Panarat Cherntanomwong"
         }
       ],
-      "photo": "images/itc-cscc.jpg",
       "badge": "Presented"
     },
     {

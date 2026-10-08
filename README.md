@@ -19,8 +19,10 @@ Edit `journey.json` only:
 
 - **New moment:** add an object to `events` with `era`, `year`, `date`, `title`, `short`, `long`, `icon`.
   Optional: `beats`, `stats`, `links`, `tags`, `"featured": true` (wide card), `"status": "prep"` (in progress).
-- **Photo:** put the file in `images/` and set `"photo": "images/<file>.jpg"` on the event. Missing files are hidden, never shown broken.
-  Slots already wired: `portrait.jpg` (hero, square), `kushiro.jpg`, `uec.jpg` (featured cards), `itc-cscc.jpg` (First paper), `graduation.jpg` (Two degrees).
+- **Photos:** put files in `images/` named `<event>-1.jpg`, `<event>-2.jpg`, … (1 = lead photo) and list them on the event:
+  `"photos": ["images/kushiro-1.jpg", "images/kushiro-2.jpg"]`. One photo shows plain; several become a swipeable strip with dots (no autoplay).
+  Files that fail to load drop out. Hero portrait: `"portrait": "images/portrait.jpg"` in `profile`. Resize to ≤1600px wide before committing.
+- **Demo clip:** on a private build, `"video": "<url>"` replaces "request a demo" with "watch a short demo".
 - **Selected work:** the `selected` list under the hero; `go` is `feat:<event id>`, `event:<event id>` (opens it) or `build:<slug of title>`.
 - **Status chip:** optional `"badge"` on an event (e.g. `Presented`, `In preparation`).
 - **New project:** add to `builds`. `"private": true` shows "demo on request" instead of a link.
