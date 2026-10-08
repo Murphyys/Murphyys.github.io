@@ -9,6 +9,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-180.png">
 <title>Bordin Pantdej | Portfolio</title>
+<script>try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -47,6 +48,8 @@ button{font-family:inherit}
 .rail{position:fixed;top:0;right:6px;bottom:0;width:2px;z-index:20;background:color-mix(in srgb,var(--ink-soft) 28%,transparent);pointer-events:none}
 .rail i{position:absolute;right:-3px;width:8px;height:8px;border-radius:50%;background:var(--now);box-shadow:0 0 6px var(--now);transform:translateY(-50%);top:0}
 .soft{color:var(--dyn-soft,var(--ink-soft))}
+.theme{position:fixed;top:12px;right:18px;z-index:30;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:1rem;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.theme:hover{border-color:var(--past)}
 .mono{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.04em}
 
 /* hero */
@@ -233,6 +236,7 @@ button{font-family:inherit}
   <g id="i-close" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></g>
 </defs></svg>
 
+<button type="button" class="theme" id="themeBtn">🌙</button>
 <div id="bg-layer"></div>
 <div class="rail" aria-hidden="true"><i id="railDot"></i></div>
 
@@ -560,6 +564,15 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
   build();
   document.fonts && document.fonts.ready.then(build);
 }).catch(err => { document.getElementById('journey').innerHTML = '<p style="text-align:center;padding:40px">Could not load journey.json</p>'; console.error(err); });
+
+// ---------- light / dark toggle (default follows the device) ----------
+(function () {
+  const btn = document.getElementById('themeBtn'), root = document.documentElement, mq = matchMedia('(prefers-color-scheme: dark)');
+  const current = () => root.dataset.theme || (mq.matches ? 'dark' : 'light');
+  const paint = () => { const dark = current() === 'dark'; btn.textContent = dark ? '☀️' : '🌙'; btn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme'); btn.title = btn.getAttribute('aria-label'); };
+  btn.addEventListener('click', () => { const next = current() === 'dark' ? 'light' : 'dark'; root.dataset.theme = next; try { localStorage.setItem('theme', next); } catch (e) {} paint(); });
+  mq.addEventListener('change', paint); paint();
+})();
 </script>
 
 </body>
