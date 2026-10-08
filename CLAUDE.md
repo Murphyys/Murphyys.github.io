@@ -21,10 +21,8 @@ Static portfolio site on GitHub Pages (user site, served from `main`). No framew
   student ID, certificate no.) and Kushiro (birth date); those two are scanned PDFs with no text layer, so the masks are pixel boxes
   (re-check by eye after any re-render). `TESA_Team.pdf` is never published (teammates' names); use the single-name `TESA.pdf` only.
 - **Hero cutout** (`images/portrait-cutout.webp`) was made with `hyperframes remove-background` from `dev/cutkit-hyperframes`
-  (`--device dml`) on the 600² `portrait.jpg` and kept **untrimmed** — it must stay the exact frame of `portrait.jpg`, because the hero
-  stacks photo-in-disc + cutout 1:1 ("pop-out" look Ice asked for, 2026-10-09). Regenerate both together if the portrait changes. The
-  round `portrait.jpg` stays as the fallback and `og:image`. Source photo: the sakura one (Ice liked both; the UEC-dish one has a cut-off
-  right edge and text in the background, so it is the lesser choice for this layout).
+  (`--device dml`) on the 600² portrait, then trimmed to the alpha bounding box. A higher-resolution source would sharpen it; the round
+  `portrait.jpg` stays as the fallback and `og:image`.
 - **Photos** in `images/` are re-encoded copies (≤1600px, EXIF stripped), ≤4 per event, chosen for a formal page — the originals stay with Ice.
   Both themes share one warm palette: light sepia and its dark inversion (`--bg #15130f`, `--surface #1f1b16`, brass accents). Keep the two
   dark blocks in `index.html` identical, and `cv.html` in step; the CV print block always forces the light set.

@@ -26,10 +26,9 @@ Edit `journey.json` only:
   Files that fail to load drop out. Arrows wrap around, and tapping a photo opens it full-size (lightbox with ‹ › / arrow keys, wrapping too).
   Non-featured events show their lead photo as a small thumbnail on the timeline card.
   Hero portrait: `"portrait": "images/portrait.jpg"` in `profile` (600×600, also used as `og:image`) and, optionally,
-  `"portraitCutout": "images/portrait-cutout.webp"` — the **same frame** as `portrait.jpg` with the background removed (alpha), made with
-  `hyperframes remove-background portrait.jpg -o cutout.png` and **not** trimmed. The hero stacks the two 1:1: the photo shows only inside
-  a brass disc, the cutout sits in front with the head rising above the rim. If the cutout is missing or fails to load, the round `portrait`
-  is shown instead.
+  `"portraitCutout": "images/portrait-cutout.webp"` — a background-removed head-and-shoulders PNG/WebP with alpha, shown on a brass disc
+  with the head rising above it (made with `hyperframes remove-background portrait.jpg -o cutout.png`, then trimmed to the subject's bounding box).
+  If the cutout is missing or fails to load, the round `portrait` is shown instead.
   Keep it to ≤4 photos per event, ≤1600px on the long side, JPEG ~q82, and strip EXIF (location data) before committing.
 - **Certifications & awards:** the top-level `certs` list, newest first:
   `{"id", "kind": "cert" | "award", "title", "issuer", "date", "image": "images/certs/<id>.jpg", "badge"?, "desc"?, "href"? (verify link), "event"? (event id), "cv"?: true}`.
