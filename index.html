@@ -60,14 +60,21 @@ button{font-family:inherit}
 .hero h1{font-size:clamp(2.6rem,8vw,4.6rem);line-height:1.02;letter-spacing:-.01em}
 .hero .sub{font-family:var(--f-display);font-size:clamp(1.05rem,2.4vw,1.35rem);max-width:34em}
 .portrait{width:180px;height:180px;border-radius:50%;object-fit:cover;border:2px solid var(--past);box-shadow:0 0 0 6px color-mix(in srgb,var(--past) 14%,transparent)}
-/* cutout portrait on a brass disc: the figure is taller than the disc so the head rises above it; clip-path = rectangle above the disc's
-   centre line + the disc's lower half, so the body is cut by the disc's curve while the head overflows. Fallback is .portrait above. */
-.hero-fig{position:relative;width:220px;height:272px;margin:0 0 4px;clip-path:path("M0 0H220V162A110 110 0 0 1 0 162Z")}
-.hero-fig::before{content:"";position:absolute;left:0;top:52px;width:220px;height:220px;border-radius:50%;background:color-mix(in srgb,var(--past) 24%,var(--surface));box-shadow:inset 0 0 0 2px var(--past)}
-.hero-fig img{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:100%;width:auto;max-width:none;filter:drop-shadow(0 8px 12px rgba(0,0,0,.28))}
+/* "pop-out" portrait: three layers of the SAME photo frame (portrait.jpg + its background-removed twin), so they register exactly.
+   .bg  = the photo clipped to the disc (softened, brass-tinted) — the background only exists inside the circle
+   .fg  = the cutout, drawn twice: .a clipped to the rectangle above the disc's centre (head rises above the rim),
+          .b clipped to the disc (body cut by the curve). The union of the two is what you see. Ring sits under the subject.
+   Geometry is in custom properties so the phone size is one line. Fallback (no cutout): the round .portrait above. */
+.hero-fig{--w:272px;--h:300px;--d:200px;--cy:190px;position:relative;width:var(--w);height:var(--h);margin:0 0 2px}
+.hero-fig::before{content:"";position:absolute;left:50%;top:calc(var(--cy) - var(--d)/2);width:var(--d);height:var(--d);transform:translateX(-50%);border-radius:50%;background:color-mix(in srgb,var(--past) 24%,var(--surface));box-shadow:inset 0 0 0 2px var(--past),0 0 0 6px color-mix(in srgb,var(--past) 12%,transparent)}
+.hero-fig img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;max-width:none}
+.hero-fig .bg{clip-path:circle(calc(var(--d)/2 - 2px) at 50% var(--cy));filter:saturate(.8) brightness(.96) blur(.4px);opacity:.92}
+.hero-fig .bg+.tint{position:absolute;left:50%;top:calc(var(--cy) - var(--d)/2);width:var(--d);height:var(--d);transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle at 50% 60%,transparent 55%,color-mix(in srgb,var(--past) 38%,transparent));pointer-events:none}
+.hero-fig .fg{filter:drop-shadow(0 8px 12px rgba(0,0,0,.28))}
+.hero-fig .fg.a{clip-path:inset(0 0 calc(var(--h) - var(--cy)) 0)}
+.hero-fig .fg.b{clip-path:circle(calc(var(--d)/2) at 50% var(--cy))}
 @media (max-width:560px){
-  .hero-fig{width:176px;height:218px;clip-path:path("M0 0H176V130A88 88 0 0 1 0 130Z")}
-  .hero-fig::before{top:42px;width:176px;height:176px}
+  .hero-fig{--w:218px;--h:240px;--d:160px;--cy:152px}
   .portrait{width:150px;height:150px}
 }
 .selected{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;width:min(860px,100%);margin-top:22px;text-align:left}
@@ -285,7 +292,10 @@ button{font-family:inherit}
 <div class="rail" aria-hidden="true"><i id="railDot"></i></div>
 
 <header class="hero" id="top">
-  <figure class="hero-fig" id="heroFig" hidden><img id="cutout" alt="Bordin Pantdej"></figure>
+  <figure class="hero-fig" id="heroFig" hidden>
+    <img class="bg" id="cutoutBg" alt="" aria-hidden="true"><span class="tint" aria-hidden="true"></span>
+    <img class="fg a" id="cutout" alt="Bordin Pantdej"><img class="fg b" id="cutoutB" alt="" aria-hidden="true">
+  </figure>
   <img class="portrait" id="portrait" alt="Bordin Pantdej" hidden>
   <p class="eyebrow soft">Bangkok · Networks · AI automation</p>
   <h1>Bordin Pantdej</h1>
@@ -373,10 +383,11 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
   // ---------- hero facts ----------
   $('facts').innerHTML = D.facts.map(f => `<div><b>${esc(f.v)}</b><span class="soft">${esc(f.k)}</span></div>`).join('');
   const showPortrait = () => { if (D.profile.portrait) { const im = $('portrait'); im.onload = () => { im.hidden = false; }; im.src = D.profile.portrait; } };
-  if (D.profile.portraitCutout) {
+  if (D.profile.portraitCutout && D.profile.portrait) {
+    // cutout must share portrait.jpg's frame (same crop, same size) — the layers are stacked 1:1
     const f = $('heroFig'), im = $('cutout');
     im.onload = () => { f.hidden = false; }; im.onerror = () => { f.remove(); showPortrait(); };
-    im.src = D.profile.portraitCutout;
+    $('cutoutBg').src = D.profile.portrait; $('cutoutB').src = D.profile.portraitCutout; im.src = D.profile.portraitCutout;
   } else showPortrait();
   if (D.selected) {
     const sel = $('selected'); sel.hidden = false;
