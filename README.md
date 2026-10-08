@@ -19,7 +19,10 @@ Edit `journey.json` only:
 
 - **New moment:** add an object to `events` with `era`, `year`, `date`, `title`, `short`, `long`, `icon`.
   Optional: `beats`, `stats`, `links`, `tags`, `"featured": true` (wide card), `"status": "prep"` (in progress).
-- **Photo:** put the file in `images/` and set `"photo": "images/<file>.jpg"` on the event.
+- **Photo:** put the file in `images/` and set `"photo": "images/<file>.jpg"` on the event. Missing files are hidden, never shown broken.
+  Slots already wired: `portrait.jpg` (hero, square), `kushiro.jpg`, `uec.jpg` (featured cards), `itc-cscc.jpg` (First paper), `graduation.jpg` (Two degrees).
+- **Selected work:** the `selected` list under the hero; `go` is `feat:<event id>`, `event:<event id>` (opens it) or `build:<slug of title>`.
+- **Status chip:** optional `"badge"` on an event (e.g. `Presented`, `In preparation`).
 - **New project:** add to `builds`. `"private": true` shows "demo on request" instead of a link.
 
 Icons available: `trophy`, `lang`, `torii`, `net`, `grad`, `wifi`, `work`, `badge`, `paper`.

@@ -2,7 +2,8 @@
   "profile": {
     "email": "69016099@kmitl.ac.th",
     "github": "https://github.com/Murphyys",
-    "linkedin": "https://www.linkedin.com/in/bordin-pantdej-39733b248"
+    "linkedin": "https://www.linkedin.com/in/bordin-pantdej-39733b248",
+    "portrait": "images/portrait.jpg"
   },
   "facts": [
     {
@@ -18,8 +19,28 @@
       "k": "paper published, 1 in progress"
     },
     {
-      "v": "6",
+      "v": "5",
       "k": "tools built and in daily use"
+    }
+  ],
+  "selected": [
+    {
+      "kicker": "Thesis · algorithm",
+      "title": "DC-HKNN",
+      "desc": "Wi-Fi positioning that finds the floor first, then filters neighbours. 2.225 m mean error vs 3.814 m for standard KNN.",
+      "go": "feat:thesis"
+    },
+    {
+      "kicker": "Paper · ITC-CSCC 2026",
+      "title": "Cloudless indoor positioning",
+      "desc": "The whole positioning pipeline runs on the phone, with no server.",
+      "go": "event:paper1"
+    },
+    {
+      "kicker": "Web app · in daily use",
+      "title": "Finly",
+      "desc": "Personal finance app with budgets, card cycles, live portfolio and Discord reports.",
+      "go": "build:finly"
     }
   ],
   "eras": [
@@ -47,7 +68,7 @@
       "idx": "III",
       "title": "Things I Built",
       "plain": "Automations and tools I still use",
-      "range": "2024 – now",
+      "range": "2026 – now",
       "scene": "blocks"
     }
   ],
@@ -81,7 +102,7 @@
       "featured": true,
       "short": "My first time working abroad.",
       "icon": "torii",
-      "photo": "",
+      "photo": "images/kushiro.jpg",
       "long": "Japanese started as a hobby. Six weeks at the National Institute of Technology, Kushiro College turned it into a direction. I built an object detector that counts snacks on a shelf and reports to Microsoft Teams, worked alongside Finnish and Japanese students, and came home knowing I wanted research and Japan to be part of what comes next.",
       "beats": [
         {
@@ -136,7 +157,7 @@
       "featured": true,
       "short": "Software-defined networking at the University of Electro-Communications.",
       "icon": "net",
-      "photo": "",
+      "photo": "images/uec.jpg",
       "long": "Two months in the Kitsuwan Lab at the University of Electro-Communications (UEC), Tokyo. I studied how a software-defined network detects a failed link and reroutes traffic, using Mininet to build and break test networks. It was my first time working inside a research lab day to day.",
       "beats": [
         {
@@ -189,7 +210,9 @@
         "Python",
         "scikit-learn",
         "XGBoost"
-      ]
+      ],
+      "note": "Collected in a multi-floor building at KMITL with 18 Wi-Fi access points. Both baselines run on the same test split; hierarchical KNN reaches 3.656 m.",
+      "demoNote": "An illustration of the idea on a toy map, not the trained model."
     },
     {
       "id": "grad",
@@ -213,7 +236,8 @@
           "label": "Also",
           "text": "Member of the KMITL Security Lab"
         }
-      ]
+      ],
+      "photo": "images/graduation.jpg"
     },
     {
       "id": "job",
@@ -256,10 +280,20 @@
       "long": "Our team's system runs the whole positioning pipeline on the phone itself, without sending data to a server. It was accepted and presented at ITC-CSCC 2026.",
       "beats": [
         {
+          "label": "Title",
+          "text": "A Cloudless Multi-Floor Indoor Positioning System Using On-Device Machine Learning"
+        },
+        {
+          "label": "Status",
+          "text": "Presented at ITC-CSCC 2026, Bangkok · DOI pending"
+        },
+        {
           "label": "Authors",
           "text": "Wasan Boonsong, Bordin Pantdej, Panarat Cherntanomwong"
         }
-      ]
+      ],
+      "photo": "images/itc-cscc.jpg",
+      "badge": "Presented"
     },
     {
       "id": "paper2",
@@ -276,14 +310,15 @@
           "label": "Authors",
           "text": "Bordin Pantdej, Wasan Boonsong, Panarat Cherntanomwong, et al."
         }
-      ]
+      ],
+      "badge": "In preparation"
     }
   ],
   "builds": [
     {
       "title": "Finly",
       "wide": true,
-      "kicker": "Longest-running project · since 2025",
+      "kicker": "Longest-running project · spreadsheet since 2022, app since 2026",
       "desc": "My money in one place. It started as an Excel sheet and is now a web app on its eighth major version: spending and budgets, credit-card billing cycles, savings goals, and live brokerage and crypto positions with returns compared against the S&P 500. Monthly reports and card reminders arrive in Discord, and the app is locked with 2FA, a PIN and biometrics.",
       "tags": [
         "Next.js",
@@ -336,15 +371,6 @@
       "tags": [
         "Apps Script",
         "Gemini"
-      ]
-    },
-    {
-      "title": "Usage dashboard",
-      "private": true,
-      "desc": "A local dashboard showing how much I use AI coding tools and what it costs, by day and project.",
-      "tags": [
-        "Node.js",
-        "Chart.js"
       ]
     }
   ]

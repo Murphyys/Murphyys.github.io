@@ -19,7 +19,7 @@ Static portfolio site on GitHub Pages (user site, served from `main`). No framew
 
 ## Pending / Known issues
 
-- Photos (idea A): add Kushiro, UEC, graduation, ITC-CSCC photos to `images/` and set `photo` on those events.
+- Photos: slots are wired (`portrait`, `kushiro`, `uec`, `itc-cscc`, `graduation` .jpg in `images/`); waiting for Ice's files. Resize to ≤1600px wide (portrait ≤600px square) and compress before committing.
 - LinkedIn profile is outdated; update it, then consider a shorter custom URL and update `profile.linkedin`.
 - v1.1: printable `/cv` page generated from `journey.json`.
 - After ICECC submission (deadline 2026-10-15): set paper2 to "Submitted".

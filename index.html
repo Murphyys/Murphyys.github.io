@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Bordin Pantdej (Ice): Wi-Fi indoor positioning research, networks and machine learning, and the tools I build.">
-<meta property="og:title" content="Bordin Pantdej">
+<meta name="description" content="Bordin Pantdej (Ice) — Wi-Fi indoor positioning research and AI automations I build and use every day.">
+<meta property="og:title" content="Bordin Pantdej | Portfolio">
 <meta property="og:description" content="Research, projects and the path so far.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%2214%22 fill=%22%238a5a1e%22/%3E%3Ctext x=%2216%22 y=%2221.5%22 font-size=%2215%22 text-anchor=%22middle%22 fill=%22%23faf7ee%22 font-family=%22Georgia%22%3EB%3C/text%3E%3C/svg%3E">
-<title>Bordin Pantdej</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<title>Bordin Pantdej | Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -15,7 +16,7 @@
 /* Layout: a single vertical path read top to bottom — eras as chapter banners with line-art scenes, big faded years in the empty side,
    key moments as wide featured cards, the path fills as you scroll and the page darkens toward "what's next" */
 :root{
-  --bg:#ece6d6; --surface:#faf7ee; --ink:#2b2620; --ink-soft:#6b6354; --line:#c7bb98;
+  --bg:#ece6d6; --surface:#faf7ee; --ink:#2b2620; --ink-soft:#5a5244; --line:#c7bb98;
   --past:#8a5a1e; --now:#c9862e; --future:#1f6f68; --year:#cdbf9c;
   --wash1:#e4d9c0; --wash2:#d9c9a6; --wash3:#cdd2bd; --wash4:#b5c7bd;
   --abyss:#16181f; --abyss-ink:#ece7d8; --abyss-soft:#b3ad9c;
@@ -24,12 +25,12 @@
   --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#12141c; --surface:#1b1e2a; --ink:#ece7d8; --ink-soft:#a49d89; --line:#363d50;
+  --bg:#12141c; --surface:#1b1e2a; --ink:#ece7d8; --ink-soft:#bab39f; --line:#363d50;
   --past:#e0a84e; --now:#f0b155; --future:#57d6c2; --year:#2c2f3c;
   --wash1:#1a1c25; --wash2:#24241f; --wash3:#1f2826; --wash4:#1b2b2a;
   --abyss:#0a0b10; --abyss-ink:#ece7d8; --abyss-soft:#a7a191; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#12141c; --surface:#1b1e2a; --ink:#ece7d8; --ink-soft:#a49d89; --line:#363d50;
+  --bg:#12141c; --surface:#1b1e2a; --ink:#ece7d8; --ink-soft:#bab39f; --line:#363d50;
   --past:#e0a84e; --now:#f0b155; --future:#57d6c2; --year:#2c2f3c;
   --wash1:#1a1c25; --wash2:#24241f; --wash3:#1f2826; --wash4:#1b2b2a;
   --abyss:#0a0b10; --abyss-ink:#ece7d8; --abyss-soft:#a7a191; color-scheme:dark}
@@ -52,7 +53,17 @@ button{font-family:inherit}
 .hero{min-height:min(88vh,760px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:72px 16px 48px;gap:14px}
 .eyebrow{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
 .hero h1{font-size:clamp(2.6rem,8vw,4.6rem);line-height:1.02;letter-spacing:-.01em}
-.hero .sub{font-family:var(--f-display);font-style:italic;font-size:clamp(1.05rem,2.4vw,1.35rem);max-width:34em}
+.hero .sub{font-family:var(--f-display);font-size:clamp(1.05rem,2.4vw,1.35rem);max-width:34em}
+.portrait{width:88px;height:88px;border-radius:50%;object-fit:cover;border:2px solid var(--past);box-shadow:0 0 0 5px color-mix(in srgb,var(--past) 14%,transparent)}
+.selected{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;width:min(860px,100%);margin-top:22px;text-align:left}
+.selected h2{grid-column:1/-1;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:400;text-align:center}
+.sel{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;color:var(--ink);cursor:pointer;font:inherit;text-align:left;transition:border-color .15s,transform .15s}
+.sel:hover{border-color:var(--past);transform:translateY(-2px)}
+.sel .k{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--past)}
+.sel b{font-family:var(--f-display);font-weight:500;font-size:1.15rem;line-height:1.25}
+.sel .d{font-size:.84rem;color:var(--ink-soft);line-height:1.5}
+.sel .go{font-family:var(--f-mono);font-size:.7rem;color:var(--past);margin-top:auto;padding-top:4px}
+@media (max-width:720px){.selected{grid-template-columns:1fr}}
 .facts{display:flex;flex-wrap:wrap;justify-content:center;gap:0;margin-top:18px;border:1px solid var(--line);border-radius:6px;background:color-mix(in srgb,var(--surface) 70%,transparent)}
 .facts div{padding:12px 20px;display:flex;flex-direction:column;align-items:center;min-width:120px}
 .facts div+div{border-left:1px solid var(--line)}
@@ -91,6 +102,9 @@ button{font-family:inherit}
 .wp.prep.lit .dot{background:var(--surface);color:var(--future)}
 .wp .t{font-family:var(--f-display);font-weight:500;font-size:1.16rem;line-height:1.3;transition:color .15s;text-wrap:balance}
 .wp .d{font-size:.9rem;max-width:40ch}
+.badge{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.06em;padding:1px 8px;border-radius:999px;border:1px solid var(--past);color:var(--past);margin-top:4px;width:fit-content}
+.wp.prep .badge{border-color:var(--future);color:var(--future)}
+.note{margin-top:10px;font-size:.82rem;line-height:1.55;color:var(--ink-soft)}
 .more{font-family:var(--f-mono);font-size:.7rem;color:var(--past);margin-top:4px}
 .wp:hover .t{color:var(--past)} .wp:hover .dot{transform:scale(1.06)}
 
@@ -114,7 +128,7 @@ button{font-family:inherit}
 .beats li{display:grid;grid-template-columns:110px 1fr;gap:12px;font-size:.9rem}
 .beats li .mono{color:var(--past);padding-top:2px}
 .tagrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
-.tagrow span{font-family:var(--f-mono);font-size:.68rem;padding:2px 8px;border:1px solid var(--line);border-radius:999px;color:var(--ink-soft)}
+.tagrow span{font-family:var(--f-mono);font-size:.72rem;padding:2px 8px;border:1px solid var(--line);border-radius:999px;color:var(--ink-soft)}
 
 @media (max-width:640px){
   .path .track,.path .fill{left:39px}
@@ -138,9 +152,10 @@ button{font-family:inherit}
 .card.b.wide h3{font-size:1.6rem}
 .card.b p{font-size:.92rem;color:var(--ink-soft);max-width:62ch}
 .card.b .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
-.card.b .tags span{font-family:var(--f-mono);font-size:.68rem;padding:2px 8px;border:1px solid var(--line);border-radius:999px;color:var(--ink-soft)}
+.card.b .tags span{font-family:var(--f-mono);font-size:.72rem;padding:2px 8px;border:1px solid var(--line);border-radius:999px;color:var(--ink-soft)}
 .card.b a{font-family:var(--f-mono);font-size:.76rem;color:var(--past)}
 .card.b .priv{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-soft)}
+.card.b .priv a{font-size:inherit}
 .arch{overflow-x:auto;margin:8px -6px 0;padding-bottom:4px}
 .arch svg{min-width:640px;width:100%;height:auto;display:block}
 .arch .n{fill:var(--bg);stroke:var(--line)}
@@ -180,6 +195,7 @@ button{font-family:inherit}
 .m-hero{aspect-ratio:16/9;background:var(--bg);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--past);position:relative;overflow:hidden}
 .m-hero canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
 .m-hero img{width:100%;height:100%;object-fit:cover}
+.m-hero.ico{aspect-ratio:auto;height:96px}
 .m-hero .cap{position:absolute;left:12px;bottom:10px;font-family:var(--f-mono);font-size:.68rem;color:var(--ink-soft);background:color-mix(in srgb,var(--surface) 85%,transparent);padding:3px 8px;border-radius:3px}
 .m-body{padding:26px 28px 30px}
 .m-body h2{font-size:1.5rem;margin-top:4px}
@@ -210,10 +226,12 @@ button{font-family:inherit}
 <div class="rail" aria-hidden="true"><i id="railDot"></i></div>
 
 <header class="hero" id="top">
+  <img class="portrait" id="portrait" alt="Bordin Pantdej" hidden>
   <p class="eyebrow soft">Bangkok · Networks · AI automation</p>
   <h1>Bordin Pantdej</h1>
   <p class="sub soft">I'm Ice. I locate phones indoors from Wi-Fi signals, and I build AI automations I use every day. This page is the path so far, in order.</p>
   <div class="facts" id="facts"></div>
+  <div class="selected" id="selected" hidden></div>
   <nav class="jump" aria-label="Jump to">
     <a href="#research">Research</a>
     <a href="#projects">Projects</a>
@@ -256,6 +274,7 @@ button{font-family:inherit}
       <h2 id="mTitle"></h2>
       <p class="m-desc" id="mDesc"></p>
       <div class="stats" id="mStats" hidden></div>
+      <p class="note" id="mNote" hidden></p>
       <ul class="beats" id="mBeats" hidden></ul>
       <div class="m-links" id="mLinks" hidden></div>
     </div>
@@ -277,6 +296,12 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
 
   // ---------- hero facts ----------
   $('facts').innerHTML = D.facts.map(f => `<div><b>${esc(f.v)}</b><span class="soft">${esc(f.k)}</span></div>`).join('');
+  if (D.profile.portrait) { const im = $('portrait'); im.onload = () => { im.hidden = false; }; im.src = D.profile.portrait; }
+  if (D.selected) {
+    const sel = $('selected'); sel.hidden = false;
+    sel.innerHTML = `<h2 class="soft">Selected work</h2>` + D.selected.map(w => `<button type="button" class="sel" data-go="${esc(w.go)}">
+      <span class="k">${esc(w.kicker)}</span><b>${esc(w.title)}</b><span class="d">${esc(w.desc)}</span><span class="go">${w.go.startsWith('event:') ? 'Open →' : 'Go to it ↓'}</span></button>`).join('');
+  }
 
   // ---------- journey ----------
   function waypoint(e, side, showYear) {
@@ -284,7 +309,7 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
       ${showYear ? `<span class="yr" aria-hidden="true">${e.year}</span>` : ''}
       <span class="dot">${icon(e.icon, 21)}</span>
       <span class="body"><span class="mono soft">${esc(e.date)}</span><span class="t">${esc(e.title)}</span><span class="d soft">${esc(e.short)}</span>
-      <span class="more">Open →</span></span>
+      ${e.badge ? `<span class="badge">${esc(e.badge)}</span>` : ''}<span class="more">Open →</span></span>
     </button>`;
   }
   function featured(e) {
@@ -297,28 +322,30 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
         <div class="head"><span class="mono soft">${esc(e.date)}</span><span class="yrs" aria-hidden="true">${e.year}</span></div>
         <h3>${esc(e.title)}</h3>
         <p class="lead">${esc(e.long)}</p>
-        ${e.photo ? `<div class="photo"><img src="${esc(e.photo)}" alt="${esc(e.title)}" loading="lazy"></div>` : ''}
+        ${e.photo ? `<div class="photo"><img src="${esc(e.photo)}" alt="${esc(e.title)}" loading="lazy" onerror="this.parentElement.remove()"></div>` : ''}
         ${stats ? `<div class="stats">${stats}</div>` : ''}
+        ${e.note ? `<p class="note">${esc(e.note)}</p>` : ''}
         ${beats ? `<ul class="beats">${beats}</ul>` : ''}
         ${e.tags ? `<div class="tagrow">${e.tags.map(t => `<span>${esc(t)}</span>`).join('')}</div>` : ''}
         ${links ? `<p style="margin-top:14px">${links}</p>` : ''}
         ${e.demo ? `<button class="open" data-id="${e.id}">Try the live demo →</button>` : ''}
       </article></div>`;
   }
+  const slug = t => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   function builds() {
-    return `<div class="builds">` + D.builds.map(b => `<article class="card b ${b.wide ? 'wide' : ''}">
+    return `<div class="builds">` + D.builds.map(b => `<article class="card b ${b.wide ? 'wide' : ''}" id="b-${slug(b.title)}">
       ${b.kicker ? `<span class="kicker">${esc(b.kicker)}</span>` : ''}
       <h3>${esc(b.title)}</h3><p>${esc(b.desc)}</p>
       ${b.arch ? `<div class="arch" role="img" aria-label="Diagram: calendars, tasks and notes flow through Claude Code into the Obsidian vault; projects are built from it and report their status back.">${ARCH}</div>` : ''}
       <div class="tags">${b.tags.map(t => `<span>${esc(t)}</span>`).join('')}</div>
       ${b.href ? `<a href="${esc(b.href)}" target="_blank" rel="noopener">${esc(b.linkText || 'GitHub ↗')}</a>` : ''}
-      ${b.private ? `<span class="priv">Private code · demo on request</span>` : ''}
+      ${b.private ? `<span class="priv">Private code · <a href="mailto:${esc(D.profile.email)}?subject=${encodeURIComponent('Demo request: ' + b.title)}">request a demo</a></span>` : ''}
     </article>`).join('') + `</div>`;
   }
   const ARCH = (() => {
     const box = (x, y, w, h, t, s, cls = 'n') => `<rect class="${cls}" x="${x}" y="${y}" width="${w}" height="${h}" rx="6"/><text class="lbl" x="${x + 12}" y="${y + (s ? 18 : h / 2 + 4.5)}">${t}</text>${s ? `<text class="sub" x="${x + 12}" y="${y + 33}">${s}</text>` : ''}`;
     const inputs = [['Google Calendar', 'life log'], ['Google Tasks', 'study tasks'], ['Microsoft To Do', 'personal tasks'], ['Notes & sources', 'papers, chats, docs']];
-    const outs = ['Finly', 'cutkit', 'Home bot', 'Gmail digest', 'Usage dashboard'];
+    const outs = ['Finly', 'cutkit', 'Home bot', 'Gmail digest'];
     let s = `<svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg">
       <defs><marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0L8 4L0 8z"/></marker>
       <marker id="ahb" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah back" d="M0 0L8 4L0 8z"/></marker></defs>
@@ -365,8 +392,12 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
     const e = D.events.find(x => x.id === id); if (!e) return;
     lastFocus = document.activeElement;
     $('mDate').textContent = e.date; $('mTitle').textContent = e.title; $('mDesc').textContent = e.long;
+    const notes = [e.note, e.demo && e.demoNote].filter(Boolean); $('mNote').hidden = !notes.length; $('mNote').textContent = notes.join(' ');
     const hero = $('mHero');
-    hero.innerHTML = e.demo ? '' : e.photo ? `<img src="${esc(e.photo)}" alt="">` : `<span style="opacity:.85">${icon(e.icon, 46)}</span>`;
+    const iconHtml = `<span style="opacity:.85">${icon(e.icon, 40)}</span>`;
+    hero.classList.toggle('ico', !e.demo && !e.photo);
+    hero.innerHTML = e.demo ? '' : e.photo ? `<img src="${esc(e.photo)}" alt="">` : iconHtml;
+    const ph = hero.querySelector('img'); if (ph) ph.onerror = () => { hero.classList.add('ico'); hero.innerHTML = iconHtml; };
     const st = $('mStats'); st.hidden = !e.stats;
     st.innerHTML = (e.stats || []).map(s => `<div class="stat"><b>${esc(s.v)}</b><span>${esc(s.k)}</span></div>`).join('');
     const bt = $('mBeats'); bt.hidden = !e.beats;
@@ -384,6 +415,13 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
     if (lastFocus) lastFocus.focus();
   }
   $('journey').addEventListener('click', ev => { const b = ev.target.closest('.wp, .open'); if (b) open(b.dataset.id); });
+  $('selected').addEventListener('click', ev => {
+    const b = ev.target.closest('.sel'); if (!b) return;
+    const [kind, id] = b.dataset.go.split(':');
+    if (kind === 'event') return open(id);
+    const el = kind === 'feat' ? document.querySelector(`[data-feat="${id}"]`) : $('b-' + id);
+    if (el) el.scrollIntoView({ block: 'center' });
+  });
   overlay.addEventListener('click', ev => { if (ev.target === overlay) close(); });
   $('closeBtn').addEventListener('click', close);
   document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && overlay.classList.contains('open')) close(); });
@@ -417,7 +455,7 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
       if (target) { dev.x += (target.x - dev.x) * (reduce ? 1 : .2); dev.y += (target.y - dev.y) * (reduce ? 1 : .2); }
       else if (!reduce) { dev.x = W * (.5 + .3 * Math.sin(t * .4)); dev.y = H * (.5 + .28 * Math.sin(t * .63 + 1)); }
       if (!est || ts - lastT > 150) { est = estimate(); lastT = ts;
-        cap.textContent = `k = 3 · error ${(Math.hypot(est.x - dev.x, est.y - dev.y) / 30).toFixed(2)} m · ${target ? 'following you' : 'move over the map'}`; }
+        cap.textContent = `k = 3 · error ${(Math.hypot(est.x - dev.x, est.y - dev.y) / 30).toFixed(2)} m · ${target ? 'following you' : 'move or tap on the map'}`; }
       ctx.clearRect(0, 0, W, H);
       ctx.fillStyle = C.grid; for (const r of rps) ctx.fillRect(r.x - 1.5, r.y - 1.5, 3, 3);
       aps.forEach((a, i) => {
