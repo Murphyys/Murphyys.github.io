@@ -397,7 +397,9 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
   function featured(e) {
     const beats = (e.beats || []).map(b => `<li><span class="mono">${esc(b.label)}</span><span>${esc(b.text)}</span></li>`).join('');
     const stats = (e.stats || []).map(s => `<div class="stat"><b>${esc(s.v)}</b><span>${esc(s.k)}</span></div>`).join('');
-    const links = (e.links || []).map(l => `<a class="mono" style="color:var(--past)" href="${esc(l.href)}" target="_blank" rel="noopener">${esc(l.text)}</a>`).join(' ');
+    // featured cards never open the dialog, so the certificate link has to live on the card itself
+    const links = (e.links || []).map(l => `<a class="mono" style="color:var(--past)" href="${esc(l.href)}" target="_blank" rel="noopener">${esc(l.text)}</a>`)
+      .concat((D.certs || []).filter(c => c.event === e.id).map(c => `<a class="mono" style="color:var(--past)" href="#" data-cert="${esc(c.id)}">Certificate ↗</a>`)).join(' ');
     return `<div class="feat" data-feat="${e.id}">
       <span class="dot">${icon(e.icon, 21)}</span>
       <article class="card">
@@ -566,7 +568,11 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
     if (stopDemo) { stopDemo(); stopDemo = null; }
     if (lastFocus) lastFocus.focus();
   }
-  $('journey').addEventListener('click', ev => { const b = ev.target.closest('.wp, .open'); if (b) open(b.dataset.id); });
+  $('journey').addEventListener('click', ev => {
+    const c = ev.target.closest('[data-cert]');
+    if (c) { ev.preventDefault(); return openLightbox([certItem(D.certs.find(x => x.id === c.dataset.cert))]); }
+    const b = ev.target.closest('.wp, .open'); if (b) open(b.dataset.id);
+  });
   $('selected').addEventListener('click', ev => {
     const b = ev.target.closest('.sel'); if (!b) return;
     const [kind, id] = b.dataset.go.split(':');
