@@ -18,7 +18,7 @@
     },
     {
       "v": "1",
-      "k": "paper published, 1 in progress"
+      "k": "paper presented, 1 in progress"
     },
     {
       "v": "5",
@@ -50,15 +50,19 @@
     "skills": [
       {
         "k": "Programming & ML",
-        "v": "Python, C, scikit-learn, XGBoost, YOLOv8, OpenCV, Jupyter"
+        "v": "Python, C, SQL; XGBoost, YOLOv8, OpenCV, Jupyter; familiar with scikit-learn and PyTorch"
       },
       {
         "k": "Networks",
-        "v": "SDN, Mininet, Wireshark, Cisco Packet Tracer, MQTT"
+        "v": "SDN (Ryu, Mininet), Wireshark, Cisco Packet Tracer, Cisco and APRESIA switches and routers, MQTT"
       },
       {
-        "k": "Systems & web",
-        "v": "Next.js, Supabase, Vercel, Docker, Git, ESP32, Raspberry Pi"
+        "k": "Systems & cloud",
+        "v": "AWS (Academy), VPS, Supabase, Vercel, Docker, Git, ESP32, Raspberry Pi; familiar with Next.js and TypeScript"
+      },
+      {
+        "k": "Design & analysis",
+        "v": "Database design, UX/UI in Figma, SRS/SDS documentation"
       },
       {
         "k": "AI tooling",
@@ -70,7 +74,7 @@
   },
   "certs": [
     {"id": "itccscc", "kind": "cert", "title": "Certificate of Presentation — ITC-CSCC 2026", "issuer": "ECTI Association · IEIE · IEICE", "date": "Jul 2026", "image": "images/certs/itc-cscc-2026-presentation.jpg", "event": "paper1"},
-    {"id": "itpe", "kind": "cert", "title": "ITPE IT Passport (IP)", "issuer": "ITPE (IT Professional Examination)", "date": "Apr 2026", "image": "images/certs/itpe-ip.jpg"},
+    {"id": "itpe", "kind": "cert", "title": "ITPE IT Passport (IP)", "issuer": "ITPEC · NSTDA (IT Passport Examination)", "date": "Apr 2026", "image": "images/certs/itpe-ip.jpg"},
     {"id": "aws-dev", "kind": "cert", "title": "AWS Academy Graduate — Cloud Developing", "issuer": "AWS Academy", "date": "Oct 2025", "image": "images/certs/aws-cloud-developing.jpg", "href": "https://www.credly.com/go/wZiJgQEb", "cv": true},
     {"id": "uec-cert", "kind": "cert", "title": "Certificate of Research Completion", "issuer": "The University of Electro-Communications, Tokyo", "date": "Jun 2025", "image": "images/certs/uec-research-completion.jpg", "event": "uec"},
     {"id": "tesa", "kind": "award", "badge": "4th place · national", "title": "TESA Top Gun Rally #18", "issuer": "TESA · Kasetsart University Sriracha · NIA", "date": "Nov 2024", "image": "images/certs/tesa-top-gun-rally-18.jpg", "event": "comps", "desc": "A week-long national embedded-systems hackathon. Theme: Acoustic and AI-Based Predictive Maintenance with Edge Computing. I wrote the Arduino firmware for the edge device that listens to machine sound."},
@@ -108,14 +112,24 @@
   ],
   "events": [
     {
-      "id": "legaltech",
+      "id": "uni",
+      "era": "forging",
+      "year": 2022,
+      "date": "2022",
+      "title": "University begins",
+      "short": "KMITL — two degrees at once.",
+      "icon": "grad",
+      "long": "I enrolled in a dual-degree programme at King Mongkut's Institute of Technology Ladkrabang (KMITL): a B.Eng. in IoT System and Information Engineering and a B.Sc. in Industrial Physics, studied side by side."
+    },
+    {
+      "id": "legaltech", "photos": ["images/legaltech-1.jpg"],
       "era": "forging",
       "year": 2022,
       "date": "2022",
       "title": "First competition",
       "short": "Chula Legal Tech, top 12.",
       "icon": "trophy",
-      "long": "My first serious competition, in my first year at KMITL. We reached the top 12 at Chula Legal Tech, and I learned how much can be built when a deadline is close.",
+      "long": "My first serious competition, in my first year at KMITL. Our team built a questionnaire app that people fill in before they meet a lawyer, so the lawyer starts with the facts in hand. We reached the top 12 at Chula Legal Tech, and I learned how much can be built when a deadline is close.",
       "cv": [
         {
           "section": "honor",
@@ -165,7 +179,7 @@
       ]
     },
     {
-      "id": "comps",
+      "id": "comps", "photos": ["images/comps-1.jpg", "images/comps-2.jpg", "images/comps-3.jpg", "images/comps-4.jpg"],
       "era": "forging",
       "year": 2024,
       "date": "2024",
@@ -176,15 +190,19 @@
       "beats": [
         {
           "label": "4th place",
-          "text": "TESA Top Gun Rally"
+          "text": "TESA Top Gun Rally #18 — acoustic predictive maintenance on an edge device; I wrote the Arduino firmware that listens to the machine."
         },
         {
           "label": "Top 12",
-          "text": "Technopreneur"
+          "text": "Technopreneur — a tech-based waste-sorting system for a zero-waste theme."
         },
         {
           "label": "Took part",
-          "text": "42 Bangkok, Thailand Cyber Top Talent, Huawei ICT Competition, Mission Mars"
+          "text": "42 Bangkok (Basic Web piscine), Thailand Cyber Top Talent, Huawei ICT Competition"
+        },
+        {
+          "label": "Mentor",
+          "text": "Mission Mars 2024"
         }
       ],
       "cv": [
@@ -209,19 +227,26 @@
       "featured": true,
       "short": "Software-defined networking at the University of Electro-Communications.",
       "icon": "net",
-      "long": "Two months in the Kitsuwan Lab at the University of Electro-Communications (UEC), Tokyo. I studied how a software-defined network detects a failed link and reroutes traffic, using Mininet to build and break test networks. It was my first time working inside a research lab day to day.",
+      "long": "Six weeks in the Kitsuwan Lab at the University of Electro-Communications (UEC), Tokyo, on a KMITL OIA grant and the Faculty of Engineering's internship-abroad grant. My project, Practical Implementation of Link Failure Management in SDN, ran on real hardware: one PICA8 switch split into six virtual datapaths, driven by a Ryu controller with an MPLS module I wrote. Mininet was only for validating each step before touching the switch. It was my first time working inside a research lab day to day.",
       "beats": [
         {
           "label": "Start",
-          "text": "Learned SDN and Mininet from the ground up."
+          "text": "Learned SDN, Ryu and Mininet from the ground up, then moved from emulation to the lab's PICA8 switch."
         },
         {
           "label": "Project",
-          "text": "Link-failure detection and recovery in an emulated SDN."
+          "text": "Detect a failed link and reroute traffic with MPLS on a six-datapath topology carved out of one physical switch."
+        },
+        {
+          "label": "Dashboard",
+          "text": "A Dash and Cytoscape view of the live topology, polling the controller every three seconds."
         }
       ],
       "tags": [
         "SDN",
+        "Ryu",
+        "MPLS",
+        "PICA8",
         "Mininet",
         "Python"
       ],
@@ -232,12 +257,12 @@
           "org": "The University of Electro-Communications (UEC)",
           "place": "Tokyo, Japan",
           "dates": "May – Jun 2025",
-          "detail": "Link-failure detection and recovery in software-defined networks, emulated with Mininet and Python."
+          "detail": "Practical Implementation of Link Failure Management in SDN: link-failure detection and MPLS rerouting on a PICA8 switch split into six virtual datapaths (Ryu controller, Python), validated in Mininet first; Dash/Cytoscape live-topology dashboard."
         }
       ]
     },
     {
-      "id": "thesis",
+      "id": "thesis", "photos": ["images/thesis-1.jpg", "images/thesis-2.jpg", "images/thesis-3.jpg"],
       "era": "forging",
       "year": 2025,
       "date": "2025 – 2026",
@@ -246,7 +271,7 @@
       "demo": true,
       "short": "A new nearest-neighbour method for finding which floor, and where, a phone is.",
       "icon": "wifi",
-      "long": "GPS doesn't work well indoors. Wi-Fi fingerprinting fills the gap: record signal strength from every access point at known spots, then match a phone's live reading against that map. Standard KNN averages the closest matches even when they sit on different floors or far apart. DC-HKNN settles the floor first, then keeps only neighbours that pass two checks, one in signal space and one in physical space.",
+      "long": "GPS doesn't work well indoors. Wi-Fi fingerprinting fills the gap: record signal strength from every access point at known spots, then match a phone's live reading against that map. Standard KNN averages the closest matches even when they sit on different floors or far apart. DC-HKNN settles the floor first, then keeps only neighbours that pass two checks, one in signal space and one in physical space. The thesis, A Study and Development of Machine Learning Models for Real-Time Indoor Positioning Systems, was supervised by Panarat Cherntanomwong.",
       "stats": [
         {
           "v": "2.225 m",
@@ -265,6 +290,10 @@
         {
           "text": "Code on GitHub ↗",
           "href": "https://github.com/Murphyys/DC-HKNN-Indoor-Positioning"
+        },
+        {
+          "text": "Watch the presentation ↗",
+          "href": "https://youtu.be/0kAYL6_LzPU"
         }
       ],
       "tags": [
@@ -280,7 +309,7 @@
           "title": "DC-HKNN: dual-constrained hierarchical KNN",
           "org": "Bachelor's thesis, KMITL",
           "dates": "2025 – 2026",
-          "detail": "Floor-first Wi-Fi fingerprinting. 2.225 m mean error and 100% floor accuracy, vs 3.814 m for standard KNN on the same data (18 access points, multi-floor building).",
+          "detail": "Thesis: A Study and Development of Machine Learning Models for Real-Time Indoor Positioning Systems (supervisor: Panarat Cherntanomwong). Floor-first Wi-Fi fingerprinting. 2.225 m mean error and 100% floor accuracy, vs 3.814 m for standard KNN on the same data (18 access points, multi-floor building).",
           "link": "https://github.com/Murphyys/DC-HKNN-Indoor-Positioning"
         }
       ]
@@ -291,13 +320,13 @@
       "year": 2026,
       "date": "2026",
       "title": "Two degrees, both with honours",
-      "short": "B.Eng. IoT Systems (first-class) and B.Sc. Industrial Physics (second-class), KMITL.",
+      "short": "B.Eng. IoT System and Information Engineering (first-class) and B.Sc. Industrial Physics (second-class), KMITL.",
       "icon": "grad",
-      "long": "I finished a dual-degree programme at King Mongkut's Institute of Technology Ladkrabang (KMITL).",
+      "long": "I finished the dual-degree programme at King Mongkut's Institute of Technology Ladkrabang (KMITL). Along the way I was a teaching assistant for the cloud, internetworking and AI courses, and in the KMITL Security Lab I set up penetration-test and DDoS-simulation exercises.",
       "beats": [
         {
           "label": "B.Eng.",
-          "text": "IoT Systems and Information Engineering, GPA 3.57, first-class honours"
+          "text": "IoT System and Information Engineering, GPA 3.57, first-class honours"
         },
         {
           "label": "B.Sc.",
@@ -305,25 +334,25 @@
         },
         {
           "label": "Also",
-          "text": "Member of the KMITL Security Lab"
+          "text": "Teaching assistant (cloud, internetworking, AI) · KMITL Security Lab"
         }
       ],
       "cv": [
         {
           "section": "education",
-          "title": "Bachelor of Engineering, IoT Systems and Information Engineering",
+          "title": "Dual-degree programme: B.Eng. IoT System and Information Engineering and B.Sc. Industrial Physics",
           "org": "King Mongkut's Institute of Technology Ladkrabang (KMITL)",
           "place": "Bangkok",
           "dates": "2022 – 2026",
-          "detail": "GPA 3.57, first-class honours. Thesis: DC-HKNN indoor positioning. Member of the KMITL Security Lab."
+          "detail": "B.Eng. first-class honours (GPA 3.57); B.Sc. second-class honours (GPA 3.46). Thesis: A Study and Development of Machine Learning Models for Real-Time Indoor Positioning Systems (DC-HKNN). KMITL Security Lab: set up penetration-test and DDoS-simulation exercises."
         },
         {
-          "section": "education",
-          "title": "Bachelor of Science, Industrial Physics (dual degree)",
+          "section": "experience",
+          "title": "Teaching Assistant",
           "org": "King Mongkut's Institute of Technology Ladkrabang (KMITL)",
           "place": "Bangkok",
-          "dates": "2022 – 2026",
-          "detail": "GPA 3.46, second-class honours."
+          "dates": "2025 – 2026",
+          "detail": "Cloud computing, internetworking and AI courses."
         }
       ]
     },
@@ -335,7 +364,7 @@
       "title": "Junior System Analyst",
       "short": "Pine Pacific, Bangkok.",
       "icon": "work",
-      "long": "My first full-time role: analysing requirements and designing business systems.",
+      "long": "My first full-time role. I turn internal requirements into UX/UI designs in Figma and the matching database design, hand both to the developers, and negotiate change requests along the way. I also write the SRS, SDS, architecture and role-matrix documents, and coordinate the HR and warehouse systems. On the side I mentor teams at an AWS × CP Group hackathon run by PindAI.",
       "cv": [
         {
           "section": "experience",
@@ -343,7 +372,15 @@
           "org": "Pine Pacific",
           "place": "Bangkok",
           "dates": "Apr 2026 – present",
-          "detail": "Requirements analysis and business system design."
+          "detail": "Requirements to UX/UI (Figma) and database design, handed to developers together; SRS, SDS, architecture and role-matrix documents; coordinator on HR and warehouse systems."
+        },
+        {
+          "section": "experience",
+          "title": "Mentor and Trainer (part-time)",
+          "org": "PindAI",
+          "place": "Bangkok",
+          "dates": "2026 – present",
+          "detail": "AWS × CP Group hackathon: trained teams on AWS tooling and AI-agent skills across six themes."
         }
       ]
     },
@@ -372,7 +409,7 @@
       "title": "Master's degree begins",
       "short": "M.Eng. in AIoT and Information, KMITL.",
       "icon": "grad",
-      "long": "I started a research master's at KMITL while working. My thesis continues the DC-HKNN line of work on indoor positioning.",
+      "long": "I started a research master's (thesis plan) in the Faculty of Engineering at KMITL while working. The direction is Wi-Fi fingerprinting for multi-floor indoor positioning, building on DC-HKNN.",
       "cv": [
         {
           "section": "education",
@@ -380,7 +417,7 @@
           "org": "King Mongkut's Institute of Technology Ladkrabang (KMITL)",
           "place": "Bangkok",
           "dates": "2026 – present",
-          "detail": "Research master's. Thesis continues DC-HKNN, Wi-Fi fingerprinting for multi-floor indoor positioning."
+          "detail": "Research master's (thesis plan), Faculty of Engineering. Direction: Wi-Fi fingerprinting for multi-floor indoor positioning."
         }
       ]
     },
@@ -477,7 +514,7 @@
     {
       "title": "cutkit",
       "private": true,
-      "desc": "Edits my videos for me: cuts silences and repeated takes, transcribes Thai speech, burns in captions and exports a draft I can keep editing in CapCut.",
+      "desc": "Edits my videos for me: cuts silences and repeated takes, transcribes Thai speech with Whisper running locally on the GPU, burns in captions and exports a draft I can keep editing in CapCut.",
       "tags": [
         "Python",
         "FFmpeg",
@@ -487,7 +524,7 @@
     {
       "title": "Home bot",
       "private": true,
-      "desc": "An ESP32 camera that wakes my PC over MQTT, checks it really booted, and sends photos and a daily Japanese quiz to Discord.",
+      "desc": "An ESP32 camera that wakes my PC over MQTT and checks it really booted, plus a Discord bot on Cloudflare Workers: photos on demand, a daily Japanese quiz, a drink tracker in millilitres, and a heartbeat monitor that watches nine scheduled jobs across my other tools.",
       "tags": [
         "ESP32",
         "MQTT",

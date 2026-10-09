@@ -89,6 +89,13 @@ button{font-family:inherit}
 .jump a{font-family:var(--f-mono);font-size:.78rem;text-decoration:none;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink)}
 .jump a:hover{border-color:var(--past);color:var(--past)}
 .cue{margin-top:28px;display:flex;flex-direction:column;align-items:center;gap:6px}
+/* reveal-on-scroll-up nav: hidden at the top (the hero has its own jump links) and while scrolling down */
+.topnav{position:fixed;top:0;left:0;right:0;z-index:25;display:flex;justify-content:center;gap:8px;padding:10px 64px 10px 16px;overflow-x:auto;scrollbar-width:none;background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);transform:translateY(-110%);transition:transform .25s ease}
+.topnav::-webkit-scrollbar{display:none}
+.topnav.show{transform:none}
+.topnav a{flex:0 0 auto;font-family:var(--f-mono);font-size:.74rem;text-decoration:none;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);white-space:nowrap}
+.topnav a:hover{border-color:var(--past);color:var(--past)}
+@media (max-width:560px){.topnav{flex-wrap:wrap;gap:6px;padding:8px 60px 8px 12px}.topnav a{font-size:.68rem;padding:5px 10px}}
 .cue svg{width:16px;height:16px;animation:bob 1.8s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(6px)}}
 
@@ -281,6 +288,10 @@ button{font-family:inherit}
 </defs></svg>
 
 <button type="button" class="theme" id="themeBtn">🌙</button>
+<!-- appears only while scrolling up past the hero; scrolling down reads as before -->
+<nav class="topnav" id="topnav" aria-label="Sections">
+  <a href="#research">Research</a><a href="#projects">Projects</a><a href="#certs">Certifications</a><a href="#contact">Contact</a><a href="cv.html">CV</a>
+</nav>
 <div id="bg-layer"></div>
 <div class="rail" aria-hidden="true"><i id="railDot"></i></div>
 
@@ -682,8 +693,17 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
       m.classList.toggle('lit', d.top + d.height / 2 < line);
     }
   }
+  // top nav: show on upward scroll once past the hero, hide on downward scroll or back in the hero
+  const topnav = $('topnav'), hero = $('top');
+  let lastY = scrollY;
+  function navUpdate() {
+    const y = scrollY, up = y < lastY - 2, down = y > lastY + 2;
+    if (y < hero.offsetHeight - 80 || down) topnav.classList.remove('show');
+    else if (up) topnav.classList.add('show');
+    lastY = y;
+  }
   let tick = false;
-  addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(() => { tick = false; update(); }); } }, { passive: true });
+  addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(() => { tick = false; update(); navUpdate(); }); } }, { passive: true });
   addEventListener('resize', build);
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', build);
   new MutationObserver(build).observe(root, { attributes: true, attributeFilter: ['data-theme'] });

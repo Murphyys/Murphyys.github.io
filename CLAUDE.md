@@ -30,10 +30,13 @@ Static portfolio site on GitHub Pages (user site, served from `main`). No framew
 
 ## Pending / Known issues
 
-- ✅ Photos (2026-10-09): portrait (sakura crop) + cutout on the hero disc, 4 photos each for `kushiro`, `uec`, `paper1`, `grad`
-  (thumbnails on the timeline cards, galleries wrap, tap to enlarge); `og:image` set. Skipped on purpose: costume/mask party shots,
-  duplicates. The UEC/Kushiro completion certificates are now in `certs` with the birth date masked. Ice can swap the portrait for the
-  UEC-dish crop (kept outside the repo) by asking, or send the original sakura photo for a sharper cutout.
+- ✅ Photos (2026-10-09/10): portrait + cutout on the hero disc; galleries for `legaltech` (1), `kushiro`, `comps`, `uec`, `thesis` (3),
+  `grad`, `paper1` (thumbnails on timeline cards, wrap, tap to enlarge); `og:image` set. Skipped on purpose: costume/mask party shots,
+  duplicates. Events without photos by design: `uni`, `job`, `itpe`, `masters`, `paper2`.
+- Degree name is **"IoT System and Information Engineering"** (no "s") — Ice confirmed 2026-10-10. The vault's LinkedIn copy still says
+  "Systems"; fix it there when the LinkedIn update happens, along with the merged dual-degree Education entry, the TA and PindAI lines.
+- Hero: Ice tried the "pop-out" variant (photo inside the disc) and reverted to the plain cutout — don't re-propose it.
+- YouTube: only the thesis presentation is linked; the two internship recordings and the channel stay in the vault by Ice's choice.
 - Demo clips: when Ice sends a link for cutkit / Home bot / Gmail digest / Second brain, set `video` on that build.
 - LinkedIn profile is outdated; update it, then consider a shorter custom URL and update `profile.linkedin`.
 - After ICECC submission (deadline 2026-10-15): set paper2 to "Submitted", replace its CV `citation` with the real title (Ice will send it), bump `cv.updated`.
