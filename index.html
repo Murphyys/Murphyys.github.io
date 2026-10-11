@@ -188,6 +188,7 @@ button{font-family:inherit}
 .card.b .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
 .card.b .tags span{font-family:var(--f-mono);font-size:.72rem;padding:2px 8px;border:1px solid var(--line);border-radius:999px;color:var(--ink-soft)}
 .card.b a{font-family:var(--f-mono);font-size:.76rem;color:var(--past)}
+.card.b .links{display:flex;flex-wrap:wrap;gap:6px 18px}
 .card.b .priv{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-soft)}
 .card.b .priv a{font-size:inherit}
 .arch{overflow-x:auto;margin:8px -6px 0;padding-bottom:4px}
@@ -463,7 +464,8 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
       <h3>${esc(b.title)}</h3><p>${esc(b.desc)}</p>
       ${b.arch ? `<div class="arch" role="img" aria-label="Diagram: calendars, tasks and notes flow through Claude Code into the Obsidian vault; projects are built from it and report their status back.">${ARCH}</div>` : ''}
       <div class="tags">${b.tags.map(t => `<span>${esc(t)}</span>`).join('')}</div>
-      ${b.href ? `<a href="${esc(b.href)}" target="_blank" rel="noopener">${esc(b.linkText || 'GitHub ↗')}</a>` : ''}
+      ${(() => { const ls = [...(b.href ? [{ href: b.href, text: b.linkText || 'GitHub ↗' }] : []), ...(b.links || [])];
+        return ls.length ? `<div class="links">${ls.map(l => `<a href="${esc(l.href)}" target="_blank" rel="noopener">${esc(l.text)}</a>`).join('')}</div>` : '' })()}
       ${b.private ? `<span class="priv">Private code · ${b.video ? `<a href="${esc(b.video)}" target="_blank" rel="noopener">watch a short demo ↗</a>` : `<a href="mailto:${esc(D.profile.email)}?subject=${encodeURIComponent('Demo request: ' + b.title)}">request a demo</a>`}</span>` : ''}
     </article>`).join('') + `</div>`;
   }

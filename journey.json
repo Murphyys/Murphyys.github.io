@@ -493,6 +493,12 @@
       ],
       "href": "https://finance-app-iota-peach.vercel.app/",
       "linkText": "Open the live app ↗",
+      "links": [
+        {
+          "href": "https://finance-app-iota-peach.vercel.app/guide",
+          "text": "How it works ↗"
+        }
+      ],
       "cvLine": "Personal finance web app with budgets, credit-card cycles, live brokerage and crypto positions, and monthly Discord reports"
     },
     {
