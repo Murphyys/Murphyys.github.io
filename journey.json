@@ -462,19 +462,19 @@
       "short": "The DC-HKNN algorithm, written up in full.",
       "icon": "paper",
       "status": "prep",
-      "long": "I'm leading the write-up of DC-HKNN as a conference paper. It's in preparation now.",
+      "long": "I led the write-up of DC-HKNN as a conference paper. It was submitted to ICECC 2027 in October 2026 and is under review.",
       "beats": [
         {
           "label": "Authors",
           "text": "Bordin Pantdej, Wasan Boonsong, Panarat Cherntanomwong, et al."
         }
       ],
-      "badge": "In preparation",
+      "badge": "Submitted",
       "cv": [
         {
           "section": "publication",
-          "status": "In preparation",
-          "citation": "B. Pantdej, W. Boonsong, P. Cherntanomwong, et al. Conference paper on the DC-HKNN algorithm for multi-floor Wi-Fi indoor positioning."
+          "status": "Submitted",
+          "citation": "B. Pantdej, W. Boonsong, P. Cherntanomwong, et al. Conference paper on the DC-HKNN algorithm for multi-floor Wi-Fi indoor positioning. Submitted to ICECC 2027."
         }
       ]
     }
