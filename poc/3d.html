@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Journey Globe (POC)</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Public+Sans:wght@400;500&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* POC: a brass dotted globe pinning the places on the journey. Tokens copied from index.html — keep in step. */
+:root{
+  --bg:#ece6d6; --surface:#faf7ee; --ink:#2b2620; --ink-soft:#5a5244; --line:#c7bb98;
+  --past:#8a5a1e; --now:#c9862e; --future:#1f6f68; --year:#cdbf9c;
+  --f-display:"Newsreader",Georgia,"Times New Roman",serif;
+  --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#15130f; --surface:#1f1b16; --ink:#ede5d3; --ink-soft:#b8ac94; --line:#3b3327;
+  --past:#d9a45a; --now:#eab261; --future:#62cdb9; --year:#2a251d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#15130f; --surface:#1f1b16; --ink:#ede5d3; --ink-soft:#b8ac94; --line:#3b3327;
+  --past:#d9a45a; --now:#eab261; --future:#62cdb9; --year:#2a251d; color-scheme:dark}
+
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--f-display);font-weight:500;margin:0}
+p{margin:0}
+a{color:inherit}
+.mono{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.04em}
+.theme{position:fixed;top:12px;right:18px;z-index:30;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center}
+.wrap{max-width:860px;margin:0 auto;padding:64px 16px 80px;text-align:center}
+.eyebrow{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.wrap h1{font-size:clamp(2rem,6vw,3rem);margin-top:4px}
+.wrap .sub{color:var(--ink-soft);margin-top:6px}
+
+/* globe stage: hidden until the module confirms WebGL; the list below is the default */
+.stage{position:relative;width:min(560px,100%);aspect-ratio:1;margin:28px auto 0;display:none}
+.has-gl .stage{display:block}
+.has-gl .fallback{display:none}
+.stage canvas{display:block;width:100%;height:100%;touch-action:pan-y;cursor:grab}
+.stage canvas.drag{cursor:grabbing}
+.pin{position:absolute;left:0;top:0;transform:translate(-50%,-50%);display:flex;align-items:center;gap:6px;padding:0;border:0;background:none;color:var(--ink);cursor:pointer;font:inherit;white-space:nowrap;transition:opacity .2s}
+.pin .hit{width:28px;height:28px;border-radius:50%;flex:0 0 auto}
+.pin .tag{font-family:var(--f-mono);font-size:.72rem;padding:2px 8px;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--surface) 88%,transparent)}
+.pin.left{flex-direction:row-reverse}
+.pin.left{transform:translate(calc(-100% + 14px),-50%)} .pin.right{transform:translate(-14px,-50%)}
+.pin:hover .tag,.pin.on .tag{border-color:var(--past);color:var(--past)}
+.pin.away{opacity:0;pointer-events:none}
+.card{width:min(560px,100%);margin:14px auto 0;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px 20px;text-align:left;min-height:84px}
+.card h3{font-size:1.25rem}
+.card ul{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:8px}
+.card li{display:grid;grid-template-columns:110px 1fr;gap:12px;font-size:.9rem}
+.card li .mono{color:var(--past);padding-top:2px}
+.card li b{font-weight:500}
+.card li span{color:var(--ink-soft)}
+@media (max-width:560px){.card li{grid-template-columns:1fr;gap:0}}
+.hint{margin-top:10px;color:var(--ink-soft)}
+.fallback{width:min(560px,100%);margin:28px auto 0;text-align:left}
+.fallback .card+.card{margin-top:10px}
+</style>
+</head>
+<body>
+<button class="theme" id="theme" aria-label="Toggle dark mode">◐</button>
+<main class="wrap">
+  <p class="eyebrow">Proof of concept · not linked from the site</p>
+  <h1>Where the path has been</h1>
+  <p class="sub">Three places so far. Drag to turn the globe; tap a place.</p>
+
+  <div class="stage" id="stage" aria-label="Globe showing Bangkok, Kushiro and Tokyo"></div>
+  <div class="card" id="card" hidden></div>
+  <p class="hint mono" id="hint" hidden>Bangkok is home; the two arcs are the research internships in Japan.</p>
+
+  <!-- shown when WebGL or the CDN is unavailable (and by ?nowebgl=1) -->
+  <div class="fallback" id="fallback"></div>
+</main>
+
+<script>
+// Places and the journey.json events that happened there. City centres only — the same level of detail the CV already shows.
+window.PLACES = [
+  { id: 'bkk', name: 'Bangkok', country: 'Thailand', lat: 13.75, lon: 100.50, side: 'left',  events: ['uni', 'thesis', 'grad', 'job', 'masters', 'paper1'] },
+  { id: 'kus', name: 'Kushiro', country: 'Japan',    lat: 42.98, lon: 144.38, side: 'right', events: ['kushiro'] },
+  { id: 'tyo', name: 'Tokyo',   country: 'Japan',    lat: 35.68, lon: 139.69, side: 'left',  events: ['uec'] },
+];
+window.JOURNEY = fetch('../journey.json', { cache: 'no-cache' }).then(r => r.json());
+
+function placeCard(p, byId) {
+  const items = p.events.map(id => byId[id]).filter(Boolean).map(e =>
+    `<li><span class="mono">${e.date || e.year}</span><div><b>${e.title}</b><br><span>${e.short || ''}</span></div></li>`).join('');
+  return `<h3>${p.name}, ${p.country}</h3><ul>${items}</ul>`;
+}
+window.placeCard = placeCard;
+
+// Fallback list is built first; the globe module hides it once WebGL is up.
+JOURNEY.then(D => {
+  const byId = Object.fromEntries(D.events.map(e => [e.id, e]));
+  document.getElementById('fallback').innerHTML = PLACES.map(p => `<div class="card">${placeCard(p, byId)}</div>`).join('');
+}).catch(() => {});
+
+// Theme toggle, same storage key as the main site
+document.getElementById('theme').addEventListener('click', () => {
+  const dark = getComputedStyle(document.documentElement).colorScheme === 'dark';
+  const next = dark ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem('theme', next) } catch (e) {}
+  window.dispatchEvent(new Event('themechange'));
+});
+</script>
+
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js';
+import { feature } from 'https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/+esm';
+
+const params = new URLSearchParams(location.search);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const stage = document.getElementById('stage');
+
+// ---- WebGL check (and ?nowebgl=1 to test the fallback) ----
+function webglOK() {
+  if (params.has('nowebgl')) return false;
+  try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')) } catch (e) { return false }
+}
+if (webglOK()) init().catch(err => { console.error('globe failed, keeping the list', err); document.documentElement.classList.remove('has-gl') });
+
+async function init() {
+  const [topo, D] = await Promise.all([
+    fetch('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/land-110m.json').then(r => r.json()),
+    JOURNEY,
+  ]);
+  const byId = Object.fromEntries(D.events.map(e => [e.id, e]));
+
+  // ---- land mask: draw the land polygons onto an equirectangular canvas, then sample it ----
+  const W = 1024, H = 512;
+  const mask = document.createElement('canvas'); mask.width = W; mask.height = H;
+  const mx = mask.getContext('2d', { willReadFrequently: true });
+  mx.fillStyle = '#000'; mx.beginPath();
+  for (const f of feature(topo, topo.objects.land).features) {
+    const polys = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates;
+    for (const poly of polys) for (const ring of poly) {
+      ring.forEach(([lon, lat], i) => { const x = (lon + 180) / 360 * W, y = (90 - lat) / 180 * H; i ? mx.lineTo(x, y) : mx.moveTo(x, y) });
+      mx.closePath();
+    }
+  }
+  mx.fill('evenodd');
+  const px = mx.getImageData(0, 0, W, H).data;
+  const isLand = (lat, lon) => {
+    const x = Math.min(W - 1, Math.floor((lon + 180) / 360 * W)), y = Math.min(H - 1, Math.floor((90 - lat) / 180 * H));
+    return px[(y * W + x) * 4 + 3] > 0;
+  };
+
+  // lat/lon (deg) -> point on a sphere where lon 0 faces +z
+  const toVec = (lat, lon, r = 1) => {
+    const a = THREE.MathUtils.degToRad(lat), b = THREE.MathUtils.degToRad(lon);
+    return new THREE.Vector3(r * Math.cos(a) * Math.sin(b), r * Math.sin(a), r * Math.cos(a) * Math.cos(b));
+  };
+
+  // ---- scene ----
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'low-power' });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  stage.appendChild(renderer.domElement);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 20);
+  camera.position.set(0, 0, 4.3);
+
+  const ambient = new THREE.AmbientLight(0xffffff, 1.6); scene.add(ambient);
+  const sun = new THREE.DirectionalLight(0xffffff, 1.4); sun.position.set(-3, 2, 4); scene.add(sun);
+
+  const tilt = new THREE.Group(), spin = new THREE.Group();   // tilt = latitude facing us, spin = longitude
+  tilt.add(spin); scene.add(tilt);
+
+  const ocean = new THREE.Mesh(new THREE.SphereGeometry(0.995, 64, 48), new THREE.MeshLambertMaterial());
+  spin.add(ocean);
+
+  // land dots on a Fibonacci lattice (even spacing, no pole bunching)
+  const N = 26000, pos = [];
+  for (let i = 0; i < N; i++) {
+    const y = 1 - (i + 0.5) / N * 2, lat = Math.asin(y) * 180 / Math.PI;
+    const lon = ((i * 137.50776) % 360) - 180;
+    if (isLand(lat, lon)) pos.push(...toVec(lat, lon, 1.002).toArray());
+  }
+  const dotGeo = new THREE.BufferGeometry(); dotGeo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  const sprite = document.createElement('canvas'); sprite.width = sprite.height = 32;
+  const sx = sprite.getContext('2d'); sx.fillStyle = '#fff'; sx.beginPath(); sx.arc(16, 16, 14, 0, Math.PI * 2); sx.fill();
+  const dotMat = new THREE.PointsMaterial({ size: 0.022, map: new THREE.CanvasTexture(sprite), alphaTest: 0.5, sizeAttenuation: true });
+  spin.add(new THREE.Points(dotGeo, dotMat));
+
+  // pins
+  const pinMat = new THREE.MeshBasicMaterial();
+  const ringMat = new THREE.MeshBasicMaterial({ transparent: true, side: THREE.DoubleSide, depthWrite: false });
+  const pins = PLACES.map(p => {
+    const v = toVec(p.lat, p.lon, 1.0);
+    const dot = new THREE.Mesh(new THREE.SphereGeometry(p.id === 'bkk' ? 0.026 : 0.02, 16, 12), pinMat);
+    dot.position.copy(v); spin.add(dot);
+    const ring = new THREE.Mesh(new THREE.RingGeometry(0.03, 0.038, 40), ringMat.clone());
+    ring.position.copy(toVec(p.lat, p.lon, 1.004)); ring.lookAt(v.clone().multiplyScalar(2)); spin.add(ring);
+    return { p, v, ring };
+  });
+
+  // arcs from home to each internship, raised in the middle; drawn in, then a bead travels along them
+  const arcMat = new THREE.LineBasicMaterial({ transparent: true, opacity: .9 });
+  const beadMat = new THREE.MeshBasicMaterial();
+  const arcs = pins.slice(1).map(({ v }, k) => {
+    const a = pins[0].v, mid = a.clone().add(v).multiplyScalar(.5);
+    mid.setLength(1 + a.distanceTo(v) * .7);
+    const curve = new THREE.QuadraticBezierCurve3(a, mid, v);
+    const geo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(80));
+    const line = new THREE.Line(geo, arcMat); spin.add(line);
+    const bead = new THREE.Mesh(new THREE.SphereGeometry(0.012, 10, 8), beadMat); spin.add(bead);
+    return { curve, geo, bead, delay: k * .5 };
+  });
+
+  // ---- theme colours come from the CSS tokens ----
+  function paint() {
+    const cs = getComputedStyle(document.documentElement), c = n => new THREE.Color(cs.getPropertyValue(n).trim());
+    const dark = cs.colorScheme === 'dark';
+    ocean.material.color = c('--surface');
+    dotMat.color = dark ? c('--past').lerp(c('--surface'), .15) : c('--past');
+    pinMat.color = c('--now'); arcMat.color = c('--now'); beadMat.color = c('--now');
+    pins.forEach(({ ring }) => ring.material.color = c('--now'));
+    // Lambert divides by π, so ~2.8 total keeps the light-mode paper colour close to --surface instead of grey
+    ambient.intensity = dark ? 1.6 : 2.5; sun.intensity = dark ? 1.2 : 1.1;
+    dotMat.size = dark ? .022 : .026;
+    requestRender();
+  }
+  addEventListener('themechange', paint);
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint);
+
+  // ---- HTML labels over the pins (real buttons: tappable, focusable) ----
+  const card = document.getElementById('card');
+  const labels = pins.map(({ p }) => {
+    const b = document.createElement('button');
+    b.className = 'pin ' + p.side; b.type = 'button';
+    b.innerHTML = `<span class="hit"></span><span class="tag">${p.name}</span>`;
+    b.setAttribute('aria-label', `${p.name}, ${p.country}`);
+    b.addEventListener('click', () => select(p.id));
+    stage.appendChild(b); return b;
+  });
+  function select(id) {
+    const p = PLACES.find(x => x.id === id);
+    labels.forEach((b, i) => b.classList.toggle('on', PLACES[i].id === id));
+    card.innerHTML = placeCard(p, byId); card.hidden = false;
+    target.lon = p.lon; target.lat = THREE.MathUtils.clamp(p.lat, 5, 40); idleAt = performance.now();
+    requestRender();
+  }
+
+  // ---- view state: default faces East Asia; drag turns longitude (horizontal only, page still scrolls vertically) ----
+  const HOME = { lat: 26, lon: 122 };
+  const view = { ...HOME }, target = { ...HOME };
+  let dragging = false, lastX = 0, idleAt = 0;
+  const cvs = renderer.domElement;
+  cvs.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; cvs.setPointerCapture(e.pointerId); cvs.classList.add('drag') });
+  cvs.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const dx = e.clientX - lastX; lastX = e.clientX;
+    target.lon -= dx * 180 / cvs.clientWidth; view.lon = target.lon; idleAt = performance.now(); requestRender();
+  });
+  const end = () => { dragging = false; cvs.classList.remove('drag') };
+  cvs.addEventListener('pointerup', end); cvs.addEventListener('pointercancel', end);
+
+  // ---- render loop: runs only while visible; with reduced motion, only on demand ----
+  let visible = true, raf = 0, t0 = performance.now(), frames = 0, fpsT = t0;
+  const size = () => { const s = stage.clientWidth; renderer.setSize(s, s, false); camera.aspect = 1; camera.updateProjectionMatrix(); requestRender() };
+  new ResizeObserver(size).observe(stage);
+  new IntersectionObserver(([en]) => { visible = en.isIntersecting; requestRender() }).observe(stage);
+  document.addEventListener('visibilitychange', requestRender);
+  function requestRender() { if (!raf && visible && !document.hidden) raf = requestAnimationFrame(frame) }
+
+  const tmp = new THREE.Vector3(), camDir = new THREE.Vector3();
+  function frame(now) {
+    raf = 0;
+    const t = (now - t0) / 1000, still = reduce.matches;
+    // after 4 s idle, drift back toward Asia with a slow sway (never a full spin — every pin is in one hemisphere)
+    if (!still && !dragging && now - idleAt > 4000) { target.lon = HOME.lon + Math.sin(t * .12) * 28; target.lat = HOME.lat }
+    view.lon += (target.lon - view.lon) * (dragging ? 1 : .06);
+    view.lat += (target.lat - view.lat) * .06;
+    spin.rotation.y = -THREE.MathUtils.degToRad(view.lon);
+    tilt.rotation.x = THREE.MathUtils.degToRad(view.lat);
+
+    for (const a of arcs) {
+      const k = still ? 1 : THREE.MathUtils.clamp((t - .6 - a.delay) / 1.4, 0, 1);
+      a.geo.setDrawRange(0, Math.ceil(81 * k));
+      a.bead.visible = !still && k === 1;
+      if (a.bead.visible) a.curve.getPoint(((t - a.delay) * .35) % 1, a.bead.position);
+    }
+    pins.forEach(({ ring }, i) => {
+      const s = still ? 1 : 1 + ((t * .6 + i * .33) % 1) * 1.4;
+      ring.scale.setScalar(s); ring.material.opacity = still ? .8 : .9 * (1 - (s - 1) / 1.4);
+    });
+
+    renderer.render(scene, camera);
+
+    // place labels; hide the ones on the far side
+    const w = cvs.clientWidth, h = cvs.clientHeight;
+    camDir.copy(camera.position).normalize();
+    pins.forEach(({ v }, i) => {
+      tmp.copy(v).applyMatrix4(spin.matrixWorld);
+      const facing = tmp.clone().normalize().dot(camDir) > .45;   // labels near the rim would crowd each other
+      tmp.project(camera);
+      const x = (tmp.x + 1) / 2 * w, L = labels[i];
+      L.style.left = x + 'px';
+      L.style.top = ((1 - tmp.y) / 2 * h) + 'px';
+      // flip a label to the other side of its pin rather than let it run off the edge (Bangkok on a phone)
+      const want = PLACES[i].side, room = L.offsetWidth - 14;
+      const side = want === 'left' && x - room < 0 ? 'right' : want === 'right' && x + room > w ? 'left' : want;
+      L.classList.toggle('left', side === 'left'); L.classList.toggle('right', side === 'right');
+      labels[i].classList.toggle('away', !facing);
+    });
+
+    if (params.has('fps')) { frames++; if (now - fpsT > 2000) { console.log('fps', (frames * 1000 / (now - fpsT)).toFixed(1)); frames = 0; fpsT = now } }
+    const settling = Math.abs(target.lon - view.lon) > .01 || Math.abs(target.lat - view.lat) > .01;
+    if (!still || settling) requestRender();
+  }
+
+  document.documentElement.classList.add('has-gl');
+  document.getElementById('hint').hidden = false;
+  paint(); size();
+  console.log('globe ready:', pos.length / 3, 'land dots');
+}
+</script>
+</body>
+</html>
