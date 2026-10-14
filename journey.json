@@ -81,6 +81,11 @@
     {"id": "aws-found", "kind": "cert", "title": "AWS Academy Graduate — Cloud Foundations", "issuer": "AWS Academy", "date": "Oct 2024", "image": "images/certs/aws-cloud-foundations.jpg", "href": "https://www.credly.com/go/0Zf88SP0", "cv": true},
     {"id": "kushiro-cert", "kind": "cert", "title": "Certificate of Completion — Summer Training Program", "issuer": "National Institute of Technology, Kushiro College", "date": "Jun 2024", "image": "images/certs/kushiro-training-completion.jpg", "event": "kushiro"}
   ],
+  "places": [
+    {"id": "bkk", "name": "Bangkok", "country": "Thailand", "lat": 13.75, "lon": 100.50, "home": true, "events": ["uni", "thesis", "grad", "job", "masters", "paper1"]},
+    {"id": "kus", "name": "Kushiro", "country": "Japan", "lat": 42.98, "lon": 144.38, "events": ["kushiro"]},
+    {"id": "tyo", "name": "Tokyo", "country": "Japan", "lat": 35.68, "lon": 139.69, "events": ["uec"]}
+  ],
   "eras": [
     {
       "id": "forging",

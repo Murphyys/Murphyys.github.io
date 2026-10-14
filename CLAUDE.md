@@ -26,7 +26,10 @@ Static portfolio site on GitHub Pages (user site, served from `main`). No framew
 - **Photos** in `images/` are re-encoded copies (≤1600px, EXIF stripped), ≤4 per event, chosen for a formal page — the originals stay with Ice.
   Both themes share one warm palette: light sepia and its dark inversion (`--bg #15130f`, `--surface #1f1b16`, brass accents). Keep the two
   dark blocks in `index.html` identical, and `cv.html` in step; the CV print block always forces the light set.
-- Test with a local server (`python -m http.server`) at desktop and phone width; no horizontal scroll.
+- **Journey globe** (`globe.js`, "You are here"): data = `places` in `journey.json`, city centres only. Keep the jsDelivr versions pinned
+  (`three@0.170.0`, `topojson-client@3.1.0`, `world-atlas@2.0.2`) and the import lazy — the first screen must not pay for Three.js.
+  Colours come from the CSS tokens, so the theme rules above cover it. Reusable lessons: vault `wiki/concepts/threejs-on-static-sites.md`.
+- Test with a local server (`python -m http.server`) at desktop and phone width; no horizontal scroll. Globe fallback: `?nowebgl=1`.
 
 ## Pending / Known issues
 

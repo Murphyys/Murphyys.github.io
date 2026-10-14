@@ -9,6 +9,7 @@ Live: https://murphyys.github.io
 | File | What it is |
 |---|---|
 | `index.html` | The page: layout, styles and scripts (no build step) |
+| `globe.js` | The journey globe in "You are here" (Three.js from jsDelivr, imported only when that section comes near) |
 | `journey.json` | All content: profile, hero facts, selected work, CV extras, eras, events, projects |
 | `cv.html` | Printable CV (`/cv`), built from the same `journey.json`; "Download PDF" = browser print → Save as PDF |
 | `favicon.svg`, `icon-180.png` | Tab icon and iOS home-screen icon |
@@ -36,6 +37,12 @@ Edit `journey.json` only:
   (opens that event) and the event's dialog gets a "Certificate ↗" link. `"cv": true` also lists the item under *Honors & certifications* on the CV —
   leave it out when the same honour is already an event `cv` entry, or the CV shows it twice. Render PDFs to JPEG (≤1600px) first, and never
   publish a scan that shows a birth date, ID or certificate number (crop or mask it).
+- **Places (journey globe):** the top-level `places` list drives the globe in "You are here":
+  `{"id", "name", "country", "lat", "lon", "home"?: true, "events": [event ids]}`. Use the **city centre**, never a campus or office.
+  The `home` place is the "now" pin; an arc runs from it to every other place, labelled with the `year` of that place's first event.
+  Clicking a place (pin or chip) with one event opens that event's dialog; with several it lists them. Events at a non-home place get
+  "On the map →" on their featured card and dialog. To add a city, add a place and list its event ids — nothing else to change.
+  Three.js (~195 KB) is fetched only when the section is near, and not at all without WebGL (the ring + place chips stay; test with `?nowebgl=1`).
 - **Contact:** the email address in the "What's next" section is itself the copy button (click → clipboard); no separate control.
 - **CV:** an event appears on the CV when it has a `cv` list, e.g. `{"section": "experience", "title", "org", "place", "dates", "detail"}`.
   Sections: `education`, `research`, `publication` (`citation` + `status`), `experience`, `honor`. Skills, languages, summary and the

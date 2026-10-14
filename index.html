@@ -233,6 +233,31 @@ button{font-family:inherit}
 .here{text-align:center;padding:96px 16px 40px}
 .here .ring{width:20px;height:20px;margin:0 auto 14px;border-radius:50%;background:var(--now);box-shadow:0 0 0 6px color-mix(in srgb,var(--now) 22%,transparent)}
 .here h3{font-size:1.5rem;margin:6px 0}
+/* journey globe (globe.js, loaded when #now comes near); the ring above stays as the fallback until it mounts */
+.globe{position:relative;width:min(520px,100%);aspect-ratio:1;margin:18px auto 0;display:none}
+.has-globe .globe{display:block}
+.here.has-globe .ring{display:none}
+.globe canvas{display:block;width:100%;height:100%;touch-action:pan-y;cursor:grab}
+.globe.drag canvas{cursor:grabbing}
+.globe .pin{position:absolute;left:0;top:0;display:flex;align-items:center;gap:6px;padding:0;border:0;background:none;color:var(--ink);cursor:pointer;font:inherit;white-space:nowrap;transform:translate(-14px,-50%);transition:opacity .2s}
+.globe .pin.left{flex-direction:row-reverse;transform:translate(calc(-100% + 14px),-50%)}
+.globe .pin .hit{width:28px;height:28px;border-radius:50%;flex:0 0 auto}
+.globe .pin .tag{font-family:var(--f-mono);font-size:.72rem;padding:2px 8px;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--surface) 88%,transparent)}
+.globe .pin:hover .tag,.globe .pin.on .tag{border-color:var(--past);color:var(--past)}
+.globe .arc-yr{position:absolute;left:0;top:0;transform:translate(-50%,-130%);font-size:.66rem;line-height:1.4;padding:0 6px;border-radius:999px;background:color-mix(in srgb,var(--surface) 85%,transparent);color:var(--past);opacity:0;pointer-events:none;transition:opacity .4s}
+.globe .arc-yr.show{opacity:.9}
+.globe .away{opacity:0!important;pointer-events:none}
+.places{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:14px}
+.places button{font-family:var(--f-mono);font-size:.74rem;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);cursor:pointer}
+.places button:hover,.places button.on{border-color:var(--past);color:var(--past)}
+.places button.home::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--now);margin-right:7px;vertical-align:1px}
+.place-card{width:min(520px,100%);margin:12px auto 0;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:14px 18px;text-align:left}
+.place-card h4{font-family:var(--f-display);font-weight:500;font-size:1.15rem;margin:0 0 6px}
+.place-card button{display:grid;grid-template-columns:96px 1fr;gap:12px;width:100%;padding:7px 0;border:0;border-top:1px solid var(--line);background:none;color:inherit;font:inherit;font-size:.88rem;text-align:left;cursor:pointer}
+.place-card button:hover b{color:var(--past)}
+.place-card .mono{color:var(--past);padding-top:2px}
+.place-card b{font-weight:500}
+@media (max-width:560px){.place-card button{grid-template-columns:1fr;gap:0}}
 
 /* next + contact */
 .next{padding:150px 16px 120px;text-align:center;color:var(--abyss-ink);background:linear-gradient(to bottom,transparent,var(--abyss) 130px)}
@@ -336,6 +361,9 @@ button{font-family:inherit}
   <p class="mono" style="color:var(--now)">October 2026</p>
   <h3>You are here</h3>
   <p class="soft" style="max-width:40ch;margin:0 auto">Working full-time, studying for a master's, and finishing my first first-author paper.</p>
+  <div class="globe" id="globe" aria-label="Globe of the places on this path"></div>
+  <div class="places" id="places" aria-label="Places"></div>
+  <div class="place-card" id="placeCard" hidden></div>
 </section>
 
 <section class="next" id="next">
@@ -411,7 +439,8 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
     const stats = (e.stats || []).map(s => `<div class="stat"><b>${esc(s.v)}</b><span>${esc(s.k)}</span></div>`).join('');
     // featured cards never open the dialog, so the certificate link has to live on the card itself
     const links = (e.links || []).map(l => `<a class="mono" style="color:var(--past)" href="${esc(l.href)}" target="_blank" rel="noopener">${esc(l.text)}</a>`)
-      .concat((D.certs || []).filter(c => c.event === e.id).map(c => `<a class="mono" style="color:var(--past)" href="#" data-cert="${esc(c.id)}">Certificate ↗</a>`)).join(' ');
+      .concat((D.certs || []).filter(c => c.event === e.id).map(c => `<a class="mono" style="color:var(--past)" href="#" data-cert="${esc(c.id)}">Certificate ↗</a>`))
+      .concat(mapLink(e.id, 'class="mono" style="color:var(--past)"') || []).join(' ');
     return `<div class="feat" data-feat="${e.id}">
       <span class="dot">${icon(e.icon, 21)}</span>
       <article class="card">
@@ -428,6 +457,10 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
       </article></div>`;
   }
   const pics = e => [].concat(e.photos || e.photo || []);
+  // the place an event happened at, if it's an away place (home events don't get a map link — that's every other card)
+  const places = D.places || [];
+  const awayPlace = id => places.find(p => !p.home && p.events.includes(id));
+  const mapLink = (id, cls = '') => { const p = awayPlace(id); return p ? `<a ${cls} href="#now" data-map="${esc(p.id)}">On the map →</a>` : ''; };
   const gallery = (list, alt) => list.length ? `<div class="gal${list.length === 1 ? ' one' : ''}"><div class="strip">${list.map((src, i) => `<img src="${esc(src)}" alt="${esc(alt)}${list.length > 1 ? ` (${i + 1}/${list.length})` : ''}" decoding="async">`).join('')}</div>
     <button class="nav prev" type="button" aria-label="Previous photo">‹</button><button class="nav next" type="button" aria-label="Next photo">›</button><div class="dots">${list.map(() => '<i></i>').join('')}</div></div>` : '';
   function wireGallery(g, onEmpty) {
@@ -570,6 +603,7 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
     bt.innerHTML = (e.beats || []).map(b => `<li><span class="mono">${esc(b.label)}</span><span>${esc(b.text)}</span></li>`).join('');
     const ln = $('mLinks'); const links = (e.links || []).map(l => `<a href="${esc(l.href)}" target="_blank" rel="noopener">${esc(l.text)}</a>`);
     (D.certs || []).filter(c => c.event === id).forEach(c => links.push(`<a href="#" data-cert="${esc(c.id)}">Certificate ↗</a>`));
+    if (mapLink(id)) links.push(mapLink(id));
     if (e.tags) links.push(`<span class="soft">${e.tags.map(esc).join(' · ')}</span>`);
     ln.hidden = !links.length; ln.innerHTML = links.join('');
     overlay.classList.add('open'); overlay.setAttribute('aria-hidden', 'false');
@@ -582,6 +616,8 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
     if (lastFocus) lastFocus.focus();
   }
   $('journey').addEventListener('click', ev => {
+    const m = ev.target.closest('[data-map]');
+    if (m) { ev.preventDefault(); return goMap(m.dataset.map); }
     const c = ev.target.closest('[data-cert]');
     if (c) { ev.preventDefault(); return openLightbox([certItem(D.certs.find(x => x.id === c.dataset.cert))]); }
     const b = ev.target.closest('.wp, .open'); if (b) open(b.dataset.id);
@@ -595,10 +631,49 @@ fetch('journey.json', { cache: 'no-cache' }).then(r => r.json()).then(D => {
   });
   overlay.addEventListener('click', ev => { if (ev.target === overlay) close(); });
   $('mLinks').addEventListener('click', ev => {
+    const m = ev.target.closest('[data-map]');
+    if (m) { ev.preventDefault(); lastFocus = null; close(); return goMap(m.dataset.map); }
     const a = ev.target.closest('[data-cert]'); if (!a) return;
     ev.preventDefault(); openLightbox([certItem(D.certs.find(c => c.id === a.dataset.cert))]);
   });
   $('closeBtn').addEventListener('click', close);
+
+  // ---------- journey globe (You are here) ----------
+  // Place chips are always there (keyboard / no-WebGL path); the globe is imported only when #now comes near,
+  // so Three.js (~195 KB) never weighs on the first screen. If it fails, the ring + chips stay.
+  const now = $('now'), placeCard = $('placeCard');
+  let globe = null, globeLoad = null;
+  $('places').innerHTML = places.map(p => `<button type="button" class="${p.home ? 'home' : ''}" data-place="${esc(p.id)}">${esc(p.name)}</button>`).join('');
+  function pick(id, fromMap) {
+    const p = places.find(x => x.id === id); if (!p) return;
+    document.querySelectorAll('#places button').forEach(b => b.classList.toggle('on', b.dataset.place === id));
+    if (globe) globe.focus(id);
+    const evs = p.events.map(x => D.events.find(e => e.id === x)).filter(Boolean);
+    if (evs.length === 1 && !fromMap) { placeCard.hidden = true; return open(evs[0].id); }
+    placeCard.innerHTML = `<h4>${esc(p.name)}, ${esc(p.country)}</h4>` + evs.map(e =>
+      `<button type="button" data-id="${esc(e.id)}"><span class="mono">${esc(e.date)}</span><span><b>${esc(e.title)}</b><br><span class="soft">${esc(e.short)}</span></span></button>`).join('');
+    placeCard.hidden = false;
+  }
+  $('places').addEventListener('click', ev => { const b = ev.target.closest('[data-place]'); if (b) pick(b.dataset.place); });
+  placeCard.addEventListener('click', ev => { const b = ev.target.closest('[data-id]'); if (b) open(b.dataset.id); });
+  // checked here, before the import, so a device without WebGL never downloads Three.js (?nowebgl=1 tests this path)
+  const webgl = (() => {
+    if (new URLSearchParams(location.search).has('nowebgl')) return false;
+    try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; }
+  })();
+  function loadGlobe() {
+    if (!globeLoad && places.length && webgl) globeLoad = import('./globe.js')
+      .then(m => m.mountGlobe($('globe'), { places, events: D.events, onPick: pick }))
+      .then(g => { globe = g; now.classList.add('has-globe'); build(); return g; })   // the page got taller: re-measure the scroll washes
+      .catch(err => { console.warn('globe unavailable, keeping the list', err.message); return null; });
+    return globeLoad || Promise.resolve(null);
+  }
+  new IntersectionObserver((en, io) => { if (en[0].isIntersecting) { io.disconnect(); loadGlobe(); } }, { rootMargin: '800px 0px' }).observe(now);
+  // "On the map →" from a timeline card or dialog: go to the globe, turn it to that place, show what happened there
+  function goMap(id) {
+    now.scrollIntoView({ block: 'center' });
+    loadGlobe().then(() => pick(id, true));
+  }
   document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && overlay.classList.contains('open')) close(); });
 
   // ---------- Wi-Fi fingerprint KNN demo ----------
