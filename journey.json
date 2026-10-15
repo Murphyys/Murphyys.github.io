@@ -307,7 +307,8 @@
         "XGBoost"
       ],
       "note": "Collected in a multi-floor building at KMITL with 18 Wi-Fi access points. Both baselines run on the same test split; hierarchical KNN reaches 3.656 m.",
-      "demoNote": "An illustration of the idea on a toy map, not the trained model.",
+      "demoNote": "The demo replays the real test set (1,096 readings) through the thesis model. Access-point positions are estimated from signal strength, and the floor outlines are drawn around the survey points, so both are approximate. Tap a floor to see the reading taken there.",
+      "demoNoteToy": "An illustration of the idea on a toy map, not the trained model.",
       "cv": [
         {
           "section": "research",

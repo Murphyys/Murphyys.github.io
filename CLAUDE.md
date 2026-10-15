@@ -29,7 +29,14 @@ Static portfolio site on GitHub Pages (user site, served from `main`). No framew
 - **Journey globe** (`globe.js`, "You are here"): data = `places` in `journey.json`, city centres only. Keep the jsDelivr versions pinned
   (`three@0.170.0`, `topojson-client@3.1.0`, `world-atlas@2.0.2`) and the import lazy — the first screen must not pay for Three.js.
   Colours come from the CSS tokens, so the theme rules above cover it. Reusable lessons: vault `wiki/concepts/threejs-on-static-sites.md`.
-- Test with a local server (`python -m http.server`) at desktop and phone width; no horizontal scroll. Globe fallback: `?nowebgl=1`.
+  Night shading follows the real sun (`subsolar()`, refreshed every minute); label de-overlap + SVG leaders run every frame — with only
+  3 places it rarely triggers, so test it with extra nearby places on a scratch globe.
+- **Thesis demo** (`ips3d.js` + `data/ips.json`, Thesis dialog): the public capstone dataset only — never ICECC paper content. Regenerate the
+  data with `tools/export_ips.py` (README); it pins the published config and `kd_tree` because tied neighbours make the MDE depend on the
+  search algorithm (2.226 m vs published 2.225 m — Ice accepted this run 2026-10-15). AP positions and floor outlines are estimates and the
+  page says so; keep that wording. The 2D toy demo in `index.html` stays as the no-WebGL fallback.
+- Test with a local server (`python -m http.server`) at desktop and phone width; no horizontal scroll. Globe/demo fallback: `?nowebgl=1`.
+  In the Claude desktop browser pane, rAF and IntersectionObserver pause while the pane is hidden — take screenshots to drive frames.
 
 ## Pending / Known issues
 

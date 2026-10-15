@@ -35,6 +35,17 @@ async function landDots() {
   return pos;
 }
 
+// Point on Earth where the sun is overhead right now (low-precision solar position, ~0.5° — plenty for a terminator)
+function subsolar(date) {
+  const n = date.getTime() / 864e5 - 10957.5;   // days since J2000.0 (2000-01-01 12:00 UTC)
+  const rad = Math.PI / 180, L = 280.46 + .9856474 * n, g = (357.528 + .9856003 * n) * rad;
+  const lam = (L + 1.915 * Math.sin(g) + .02 * Math.sin(2 * g)) * rad, eps = (23.439 - 4e-7 * n) * rad;
+  const dec = Math.asin(Math.sin(eps) * Math.sin(lam));
+  const ra = Math.atan2(Math.cos(eps) * Math.sin(lam), Math.cos(lam)) / rad;
+  const gmst = 280.46061837 + 360.98564736629 * n;
+  return { lat: dec / rad, lon: ((ra - gmst) % 360 + 540) % 360 - 180 };
+}
+
 export function webglAvailable() {
   if (new URLSearchParams(location.search).has('nowebgl')) return false;
   try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; }
@@ -67,6 +78,18 @@ export async function mountGlobe(host, { places, events, onPick }) {
   tilt.add(spin); scene.add(tilt);
   const ocean = new THREE.Mesh(new THREE.SphereGeometry(0.995, 64, 48), new THREE.MeshLambertMaterial());
   spin.add(ocean);
+
+  // night side: a shell just above the land dots, shaded by the angle to the real sun; it lives in `spin`, so the
+  // terminator turns with the globe (sun direction is in globe coordinates, updated once a minute)
+  const night = new THREE.Mesh(new THREE.SphereGeometry(1.003, 64, 48), new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false,
+    uniforms: { uSun: { value: new THREE.Vector3(1, 0, 0) }, uColor: { value: new THREE.Color() }, uAlpha: { value: .4 } },
+    vertexShader: 'varying vec3 vN; void main(){ vN = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+    fragmentShader: 'uniform vec3 uSun; uniform vec3 uColor; uniform float uAlpha; varying vec3 vN;' +
+      'void main(){ float d = dot(normalize(vN), uSun); gl_FragColor = vec4(uColor, uAlpha * smoothstep(.08, -.12, d)); }',
+  }));
+  spin.add(night);
+  const setSun = () => { const s = subsolar(new Date()); night.material.uniforms.uSun.value.copy(toVec(s.lat, s.lon)); requestRender(); };
 
   const dotGeo = new THREE.BufferGeometry(); dotGeo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
   const sprite = document.createElement('canvas'); sprite.width = sprite.height = 32;
@@ -106,6 +129,9 @@ export async function mountGlobe(host, { places, events, onPick }) {
     dotMat.color = dark ? c('--past').lerp(c('--surface'), .15) : c('--past');
     dotMat.size = dark ? .022 : .026;
     nowMat.color = c('--now'); pastMat.color = c('--past');
+    night.material.uniforms.uColor.value = dark ? new THREE.Color(0x000000) : c('--ink');
+    night.material.uniforms.uAlpha.value = dark ? .5 : .22;
+    leaderPaint();
     arcMat.color = c('--past'); beadMat.color = c('--now');
     pins.forEach(({ ring, isHome }) => { ring.material.color = c(isHome ? '--now' : '--past'); });
     // Lambert divides by π: ~3.6 total keeps the light paper close to --surface instead of grey
@@ -129,18 +155,27 @@ export async function mountGlobe(host, { places, events, onPick }) {
     const s = document.createElement('span'); s.className = 'arc-yr mono'; s.textContent = a.year || ''; s.setAttribute('aria-hidden', 'true');
     host.appendChild(s); return s;
   });
+  // leader lines for labels that had to move off their pin (one SVG under the labels)
+  const leaders = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  leaders.setAttribute('class', 'leaders'); leaders.setAttribute('aria-hidden', 'true'); host.insertBefore(leaders, labels[0]);
+  function leaderPaint() { leaders.style.color = getComputedStyle(document.documentElement).getPropertyValue('--past').trim(); }
 
   // view: default faces the home region; drag turns longitude only (vertical drag still scrolls the page)
   const HOME = { lat: THREE.MathUtils.clamp((home.lat + 38) / 2, 5, 40), lon: home.lon + 22 };
   const view = { ...HOME }, target = { ...HOME };
-  let dragging = false, lastX = 0, idleAt = 0;
-  cvs.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; cvs.setPointerCapture(e.pointerId); host.classList.add('drag'); });
+  let dragging = false, lastX = 0, lastMoveT = 0, idleAt = 0, vel = 0;   // vel = coast speed after release, deg/s
+  cvs.addEventListener('pointerdown', e => { dragging = true; vel = 0; lastX = e.clientX; lastMoveT = performance.now(); cvs.setPointerCapture(e.pointerId); host.classList.add('drag'); });
   cvs.addEventListener('pointermove', e => {
     if (!dragging) return;
-    target.lon -= (e.clientX - lastX) * 180 / cvs.clientWidth; lastX = e.clientX;
-    view.lon = target.lon; idleAt = performance.now(); requestRender();
+    const now = performance.now(), d = -(e.clientX - lastX) * 180 / cvs.clientWidth, dt = Math.max(1, now - lastMoveT) / 1000;
+    target.lon += d; lastX = e.clientX; lastMoveT = now;
+    vel = vel * .6 + (d / dt) * .4;   // smoothed, so one jittery event doesn't decide the throw
+    view.lon = target.lon; idleAt = now; requestRender();
   });
-  const end = () => { dragging = false; host.classList.remove('drag'); };
+  const end = () => {
+    if (dragging && performance.now() - lastMoveT > 80) vel = 0;   // held still before letting go: no coast
+    dragging = false; host.classList.remove('drag'); requestRender();
+  };
   cvs.addEventListener('pointerup', end); cvs.addEventListener('pointercancel', end);
 
   // render only while on screen; arcs draw in the first time the globe is actually seen
@@ -162,13 +197,18 @@ export async function mountGlobe(host, { places, events, onPick }) {
     tmp.project(camera);
     return { x: (tmp.x + 1) / 2 * cvs.clientWidth, y: (1 - tmp.y) / 2 * cvs.clientHeight, facing };
   }
+  let lastFrame = performance.now();
   function frame(now) {
     raf = 0;
     const t = (now - t0) / 1000, still = reduce.matches;
+    const dt = Math.min((now - lastFrame) / 1000, .1); lastFrame = now;
+    // coast after a throw, slowing exponentially (same feel at 60 or 120 Hz)
+    if (!dragging && Math.abs(vel) > 1) { target.lon += vel * dt; vel *= Math.exp(-3 * dt); idleAt = now; }
     // after 4 s idle, drift back toward home with a slow sway (never a full spin — the places share one hemisphere)
     if (!still && !dragging && now - idleAt > 4000) { target.lon = HOME.lon + Math.sin(t * .12) * 28; target.lat = HOME.lat; }
-    view.lon += (target.lon - view.lon) * (dragging ? 1 : .06);
-    view.lat += (target.lat - view.lat) * .06;
+    const ease = 1 - Math.exp(-3.7 * dt);   // ≈ the old 0.06-per-frame at 60 Hz, but time-based
+    view.lon += (target.lon - view.lon) * (dragging ? 1 : ease);
+    view.lat += (target.lat - view.lat) * ease;
     spin.rotation.y = -THREE.MathUtils.degToRad(view.lon);
     tilt.rotation.x = THREE.MathUtils.degToRad(view.lat);
 
@@ -189,16 +229,36 @@ export async function mountGlobe(host, { places, events, onPick }) {
 
     renderer.render(scene, camera);
 
-    const w = cvs.clientWidth;
-    pins.forEach(({ v, p }, i) => {
-      const q = project(v), L = labels[i];
+    const w = cvs.clientWidth, placed = [], paths = [];
+    // home first, then the most front-facing pins get the first pick of space
+    const order = pins.map(({ v, p }, i) => ({ i, p, q: project(v) })).sort((a, b) => (b.p === home) - (a.p === home) || b.q.facing - a.q.facing);
+    for (const { i, p, q } of order) {
+      const L = labels[i], tag = L.lastChild;
       L.style.left = q.x + 'px'; L.style.top = q.y + 'px';
-      L.classList.toggle('away', q.facing < .45);   // labels near the rim would crowd each other
+      let away = q.facing < .45;   // labels near the rim would crowd each other
       // labels sit beside their pin, flipping side rather than running off the edge (Bangkok on a phone)
       const room = L.offsetWidth - 14, want = p.side || (p === home ? 'left' : q.x > w * .62 ? 'left' : 'right');
       const side = want === 'left' && q.x - room < 0 ? 'right' : want === 'right' && q.x + room > w ? 'left' : want;
       L.classList.toggle('left', side === 'left'); L.classList.toggle('right', side === 'right');
-    });
+      // then nudge the tag up/down until it clears every label already placed; give up (hide) after 4 tries
+      const tw = tag.offsetWidth, th = tag.offsetHeight, x0 = side === 'left' ? q.x - 20 - tw : q.x + 20;
+      let dy = 0, ok = away;
+      if (!away) for (const s of [0, -1, 1, -2, 2]) {
+        const y0 = q.y - th / 2 + s * (th + 6);
+        if (!placed.some(b => x0 < b[2] + 6 && x0 + tw > b[0] - 6 && y0 < b[3] + 4 && y0 + th > b[1] - 4)) {
+          dy = s * (th + 6); placed.push([x0, y0, x0 + tw, y0 + th]); ok = true; break;
+        }
+      }
+      if (!ok) away = true;
+      L.classList.toggle('away', away);
+      tag.style.transform = dy ? `translateY(${dy}px)` : '';
+      if (!away && dy) {
+        const ex = side === 'left' ? x0 + tw : x0, ey = q.y + dy;
+        paths.push(`<path d="M${q.x.toFixed(1)} ${q.y.toFixed(1)} L${(ex + (side === 'left' ? 6 : -6)).toFixed(1)} ${ey.toFixed(1)} L${ex.toFixed(1)} ${ey.toFixed(1)}"/>`);
+      }
+    }
+    leaders.setAttribute('viewBox', `0 0 ${w} ${cvs.clientHeight}`);
+    leaders.innerHTML = paths.join('');
     arcs.forEach((a, i) => {
       const q = project(a.peak);
       yrs[i].style.left = q.x + 'px'; yrs[i].style.top = q.y + 'px';
@@ -209,7 +269,8 @@ export async function mountGlobe(host, { places, events, onPick }) {
     if (!still || settling || drawing) requestRender();
   }
 
-  paint(); size();
+  paint(); size(); setSun();
+  setInterval(setSun, 60000);
   return {
     focus(id) {
       const p = places.find(x => x.id === id); if (!p) return;

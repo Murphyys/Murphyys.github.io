@@ -9,7 +9,9 @@ Live: https://murphyys.github.io
 | File | What it is |
 |---|---|
 | `index.html` | The page: layout, styles and scripts (no build step) |
-| `globe.js` | The journey globe in "You are here" (Three.js from jsDelivr, imported only when that section comes near) |
+| `globe.js` | The journey globe in "You are here" (Three.js from jsDelivr, imported only when that section comes near): live day/night shading from the real sun position, labels that step aside from each other with leader lines, drag with coast |
+| `ips3d.js` | The Thesis dialog demo: the real DC-HKNN test set in 3D (imported only when that dialog opens; the 2D toy demo in `index.html` is the fallback) |
+| `data/ips.json` | Demo data exported from the thesis notebook by `tools/export_ips.py` (public dataset; AP positions are estimates) |
 | `journey.json` | All content: profile, hero facts, selected work, CV extras, eras, events, projects |
 | `cv.html` | Printable CV (`/cv`), built from the same `journey.json`; "Download PDF" = browser print → Save as PDF |
 | `favicon.svg`, `icon-180.png` | Tab icon and iOS home-screen icon |
@@ -47,6 +49,10 @@ Edit `journey.json` only:
 - **CV:** an event appears on the CV when it has a `cv` list, e.g. `{"section": "experience", "title", "org", "place", "dates", "detail"}`.
   Sections: `education`, `research`, `publication` (`citation` + `status`), `experience`, `honor`. Skills, languages, summary and the
   "Updated" date live in the top-level `cv` block. Add `profile.orcid` / `profile.scholar` and they show on both pages.
+- **Thesis demo:** `"demo": true` on an event puts the interactive demo in its dialog; `demoNote` is shown under it, and `demoNoteToy`
+  replaces it when the 2D fallback runs (no WebGL). To rebuild `data/ips.json`, clone `Murphyys/DC-HKNN-Indoor-Positioning` and run
+  `uv run --no-project --with pandas --with numpy --with scikit-learn --with scipy --with openpyxl python tools/export_ips.py <clone> data/ips.json`
+  (it stops if the MDEs drift from the published 2.225 / 3.814 m).
 - **Demo clip:** on a private build, `"video": "<url>"` replaces "request a demo" with "watch a short demo".
 - **Selected work:** the `selected` list under the hero; `go` is `feat:<event id>`, `event:<event id>` (opens it) or `build:<slug of title>`.
 - **Status chip:** optional `"badge"` on an event (e.g. `Presented`, `In preparation`).
