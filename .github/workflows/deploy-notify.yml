@@ -1,7 +1,7 @@
 name: Deploy Notification
 
 # GitHub Pages (deploy from branch) runs the built-in "pages-build-deployment" workflow on every push
-# → post its result to Discord #deploy-status, same embed format as finance-app/home-bot
+# → post its result to Discord #deploy_push-status, same embed format as finance-app/home-bot
 on:
   workflow_run:
     workflows: ["pages-build-deployment"]
@@ -22,7 +22,7 @@ jobs:
           REPO: ${{ github.repository }}
         run: |
           if [ -z "$DISCORD_WEBHOOK" ]; then
-            echo "::warning::DISCORD_DEPLOY_WEBHOOK_URL secret not set — no #deploy-status notification sent"
+            echo "::warning::DISCORD_DEPLOY_WEBHOOK_URL secret not set — no #deploy_push-status notification sent"
             exit 0
           fi
           if [ "$CONCLUSION" = "success" ]; then
