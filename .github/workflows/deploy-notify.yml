@@ -1,0 +1,61 @@
+name: Deploy Notification
+
+# GitHub Pages (deploy from branch) runs the built-in "pages-build-deployment" workflow on every push
+# → post its result to Discord #deploy-status, same embed format as finance-app/home-bot
+on:
+  workflow_run:
+    workflows: ["pages-build-deployment"]
+    types: [completed]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_DEPLOY_WEBHOOK_URL }}
+          CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          COMMIT_SHA: ${{ github.event.workflow_run.head_sha }}
+          COMMIT_REF: ${{ github.event.workflow_run.head_branch }}
+          COMMIT_MSG_FULL: ${{ github.event.workflow_run.head_commit.message }}
+          RUN_URL: ${{ github.event.workflow_run.html_url }}
+          REPO: ${{ github.repository }}
+        run: |
+          if [ -z "$DISCORD_WEBHOOK" ]; then
+            echo "::warning::DISCORD_DEPLOY_WEBHOOK_URL secret not set — no #deploy-status notification sent"
+            exit 0
+          fi
+          if [ "$CONCLUSION" = "success" ]; then
+            EMOJI="✅"; LABEL="Deployed"; COLOR=4898176
+          elif [ "$CONCLUSION" = "cancelled" ] || [ "$CONCLUSION" = "skipped" ]; then
+            echo "Pages run $CONCLUSION — not notifying"; exit 0
+          else
+            EMOJI="❌"; LABEL="Failed"; COLOR=16282865
+          fi
+          SHORT_SHA="${COMMIT_SHA:0:7}"
+          COMMIT_MSG=$(printf '%s' "$COMMIT_MSG_FULL" | head -n1 | cut -c1-80)
+          COMMIT_URL="https://github.com/${REPO}/commit/${COMMIT_SHA}"
+
+          FIELDS=$(jq -nc \
+            --arg ref "\`${COMMIT_REF}\`" \
+            --arg status "${EMOJI} **${LABEL}**" \
+            --arg commit "[\`${SHORT_SHA}\` — ${COMMIT_MSG}](${COMMIT_URL})" \
+            '[{"name":"Environment","value":"github-pages","inline":true},
+              {"name":"Branch","value":$ref,"inline":true},
+              {"name":"Status","value":$status,"inline":true},
+              {"name":"Commit","value":$commit}]')
+          if [ "$CONCLUSION" = "success" ]; then
+            FIELDS=$(jq -c '. + [{"name":"URL","value":"https://murphyys.github.io"}]' <<< "$FIELDS")
+          else
+            FIELDS=$(jq -c --arg v "[Actions run]($RUN_URL)" '. + [{"name":"Details","value":$v}]' <<< "$FIELDS")
+          fi
+
+          PAYLOAD=$(jq -nc \
+            --arg title "${EMOJI} Deploy ${LABEL} — portfolio (Murphyys.github.io)" \
+            --argjson color "$COLOR" \
+            --argjson fields "$FIELDS" \
+            --arg ts "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            '{"embeds":[{"title":$title,"color":$color,"fields":$fields,"footer":{"text":"GitHub Actions · GitHub Pages"},"timestamp":$ts}]}')
+
+          curl -sf -X POST "$DISCORD_WEBHOOK" -H "Content-Type: application/json" -d "$PAYLOAD"
+          echo "Sent ${LABEL} notification to Discord"
