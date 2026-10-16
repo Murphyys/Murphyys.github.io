@@ -40,7 +40,7 @@ Static portfolio site on GitHub Pages (user site, served from `main`). No framew
 
 ## Pending / Known issues
 
-- **[awaiting Ice] #deploy_push-status notify (2026-10-16)** — `.github/workflows/deploy-notify.yml` fires on `workflow_run` of the built-in `pages-build-deployment` → Discord embed (same format as Finly/home-bot). Needs repo secret **`DISCORD_DEPLOY_WEBHOOK_URL`** (the #deploy_push-status webhook URL — copy from Discord channel → Integrations → Webhooks); unset = `::warning` in the run, no message. Verify on the first push after the secret is set; if the workflow never triggers, switch to `on: deployment_status` (Finly's pattern)
+- ✅ **#deploy_push-status notify (2026-10-16)** — `.github/workflows/deploy-notify.yml` on `workflow_run` of `pages-build-deployment` → Discord embed (same format as Finly/home-bot), secret `DISCORD_DEPLOY_WEBHOOK_URL`; first real embed confirmed by Ice 2026-10-16
 
 - ✅ Photos (2026-10-09/10): portrait + cutout on the hero disc; galleries for `legaltech` (1), `kushiro`, `comps`, `uec`, `thesis` (3),
   `grad`, `paper1` (thumbnails on timeline cards, wrap, tap to enlarge); `og:image` set. Skipped on purpose: costume/mask party shots,
